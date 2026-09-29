@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="favHead" x1="12" y1="12" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#FFF8F0" />
+    </linearGradient>
+  </defs>
+  <rect x="8" y="14" width="48" height="42" rx="18" fill="url(#favHead)" stroke="#FDBA74" stroke-width="3" />
+  <!-- Sprout -->
+  <path d="M32 14 Q38 4 44 6 Q41 14 32 14" fill="#84CC16" />
+  <circle cx="32" cy="14" r="3" fill="#F59E0B" />
+  <!-- Eyes -->
+  <circle cx="23" cy="32" r="5" fill="#7C2D12" />
+  <circle cx="21.5" cy="30.5" r="1.8" fill="#FFFFFF" />
+  <circle cx="41" cy="32" r="5" fill="#7C2D12" />
+  <circle cx="39.5" cy="30.5" r="1.8" fill="#FFFFFF" />
+  <!-- Blush -->
+  <ellipse cx="17" cy="40" rx="4" ry="2.5" fill="#FDBA74" opacity="0.8" />
+  <ellipse cx="47" cy="40" rx="4" ry="2.5" fill="#FDBA74" opacity="0.8" />
+  <!-- Smile -->
+  <path d="M28 39 Q32 44 36 39" stroke="#9A3412" stroke-width="2.5" stroke-linecap="round" fill="none" />
+</svg>

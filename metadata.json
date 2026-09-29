@@ -1,0 +1,8 @@
+{
+  "name": "Remix Vườn Ươm AI",
+  "description": "Hệ sinh thái AI giáo dục mầm non: Cô học AI, Bé học vui, soạn giáo án chuẩn mầm non, English Buddy, tạo học liệu tương tác và kết nối cộng đồng giáo viên.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

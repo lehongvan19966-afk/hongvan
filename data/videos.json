@@ -1,0 +1,488 @@
+[
+  {
+    "id": "vid_1790652279477_pjuko",
+    "title": "Bai 1: Cài đặt veo 3",
+    "description": "làm video",
+    "videoUrl": "/uploads/videos/vid_1790652279453_o4mvz.mp4",
+    "playbackUrl": "/uploads/videos/vid_1790652279453_o4mvz.mp4",
+    "storagePath": "/app/applet/public/uploads/videos/vid_1790652279453_o4mvz.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop&q=80",
+    "duration": "10:00",
+    "durationSeconds": 600,
+    "topic": "Tạo video",
+    "level": "Cơ bản",
+    "targetAudience": "Toàn bộ giáo viên mầm non",
+    "tags": [
+      "CanvaAI",
+      "TruyenTranh",
+      "NgonNgu",
+      "MamNon"
+    ],
+    "courseId": "course-2",
+    "lessonId": "lesson-auto",
+    "privacy": "public",
+    "authorId": "user-001",
+    "authorName": "Cô Lê Hồng Vân",
+    "authorSchool": "Trường Mầm non Liên Minh A",
+    "authorAvatar": "👩‍🏫",
+    "createdAt": "2026-09-29T03:24:44.921Z",
+    "updatedAt": "2026-09-29T03:24:44.921Z",
+    "status": "ready",
+    "views": 1,
+    "learnersCount": 1,
+    "savesCount": 0,
+    "aiQuestionsCount": 0,
+    "userProgress": {
+      "currentTime": 0,
+      "percentage": 0,
+      "completed": false,
+      "lastWatchedDate": "2026-09-29T03:24:44.921Z"
+    },
+    "aiKnowledge": {
+      "transcript": "00:00 - 02:00: Mở đầu bài học về Bai 1: Cài đặt veo 3.\n02:00 - 06:00: Hướng dẫn thực hành chi tiết chủ đề Tạo video.\n06:00 - 10:00: Tổng kết và lưu ý áp dụng cho trẻ mầm non.",
+      "chapters": [
+        {
+          "id": "c1",
+          "time": "00:00",
+          "seconds": 0,
+          "title": "Giới thiệu bài học",
+          "summary": "Mục tiêu giờ học về Bai 1: Cài đặt veo 3"
+        },
+        {
+          "id": "c2",
+          "time": "02:00",
+          "seconds": 120,
+          "title": "Thực hành trọng tâm",
+          "summary": "Các bước áp dụng công cụ Tạo video"
+        },
+        {
+          "id": "c3",
+          "time": "06:00",
+          "seconds": 360,
+          "title": "Ứng dụng tại lớp mầm non",
+          "summary": "Kinh nghiệm truyền tải trực quan tới trẻ"
+        }
+      ],
+      "summary": [
+        "Nắm vững quy trình thực hiện Bai 1: Cài đặt veo 3 cho trẻ mầm non.",
+        "Ứng dụng công nghệ Tạo video an toàn, bám sát sư phạm.",
+        "Cách tạo sự hứng thú và tương tác tích cực cho trẻ."
+      ],
+      "keywords": [
+        "Tạo video",
+        "Mầm non",
+        "Sáng tạo AI",
+        "Cơ bản"
+      ],
+      "studyMaterials": [
+        {
+          "id": "mat-1790652279477",
+          "title": "Tài liệu tóm tắt: Bai 1: Cài đặt veo 3",
+          "type": "pdf",
+          "description": "Bản tóm tắt các bước thực hành kèm câu lệnh gợi ý"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Nội dung cốt lõi của bài học \"Bai 1: Cài đặt veo 3\" là gì?",
+          "options": [
+            "Ứng dụng Tạo video để nâng cao chất lượng giờ dạy mầm non",
+            "Học thuộc lòng lý thuyết công nghệ thông tin",
+            "Không áp dụng vào thực tế"
+          ],
+          "correctIndex": 0,
+          "explanation": "Bài giảng nhằm hỗ trợ cô giáo sử dụng Tạo video hiệu quả trong chăm sóc và giáo dục trẻ."
+        }
+      ],
+      "suggestedQuestions": [
+        "Video hướng dẫn đoạn nào về Tạo video?",
+        "Cách tải tài liệu bài học về máy tính?",
+        "Có thể áp dụng hoạt động này cho lứa tuổi nào?"
+      ],
+      "knowledgeChunks": [
+        {
+          "chunkId": "chunk-init",
+          "timestamp": "00:00 - 05:00",
+          "content": "Bai 1: Cài đặt veo 3: làm video. Công cụ áp dụng: Tạo video."
+        }
+      ]
+    },
+    "comments": []
+  },
+  {
+    "id": "vid_canva_comic_01",
+    "title": "Cách tạo truyện tranh mầm non bằng Canva AI",
+    "description": "Video hướng dẫn giáo viên tạo truyện tranh bằng AI để sử dụng trong hoạt động kể chuyện và phát triển ngôn ngữ cho trẻ.",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop&q=80",
+    "duration": "12:40",
+    "durationSeconds": 760,
+    "topic": "Canva AI",
+    "level": "Cơ bản",
+    "targetAudience": "Giáo viên Lớp Mầm & Chồi (3–5 tuổi)",
+    "tags": [
+      "CanvaAI",
+      "TruyenTranh",
+      "NgonNgu",
+      "MamNon"
+    ],
+    "courseId": "course-2",
+    "lessonId": "c2-l1",
+    "privacy": "public",
+    "authorId": "user-01",
+    "authorName": "Cô Lê Hồng Vân",
+    "authorSchool": "Trường Mầm non Liên Minh A",
+    "authorAvatar": "🌸",
+    "createdAt": "2026-09-20T08:30:00.000Z",
+    "updatedAt": "2026-09-25T14:10:00.000Z",
+    "status": "ready",
+    "views": 1420,
+    "learnersCount": 680,
+    "savesCount": 315,
+    "aiQuestionsCount": 182,
+    "userProgress": {
+      "currentTime": 522,
+      "percentage": 68,
+      "completed": false,
+      "lastWatchedDate": "2026-09-28T10:15:00.000Z"
+    },
+    "aiKnowledge": {
+      "transcript": "00:00 - 01:15: Giới thiệu giao diện Canva AI và cách chọn khung trang sách tranh mầm non 20x20cm chuẩn in ấn.\n01:15 - 04:30: Kỹ thuật viết câu lệnh tạo nhân vật bé Mai mặc yếm xanh với nét vẽ đất sét 3D bo tròn, mắt to dễ thương.\n04:30 - 08:20: Bí quyết giữ khuôn mặt nhân vật nhất quán qua 6 trang truyện kể về chuyến đi vườn bách thú.\n08:20 - 10:45: Thêm hộp thoại, thoại thơ ngắn 4 chữ dễ đọc và chọn font chữ tròn thân thiện cho trẻ mầm non.\n10:45 - 12:40: Xuất file PDF chất lượng cao để in màu hoặc chiếu trên màn hình tương tác tại lớp.",
+      "chapters": [
+        {
+          "id": "c1",
+          "time": "00:00",
+          "seconds": 0,
+          "title": "Thiết lập trang sách truyện tranh mầm non",
+          "summary": "Chọn tỉ lệ vuông 1:1 hoặc khổ A4 ngang, chọn bảng màu pastel ấm áp."
+        },
+        {
+          "id": "c2",
+          "time": "01:15",
+          "seconds": 75,
+          "title": "Tạo nhân vật 3D dễ thương bằng Canva Magic Media",
+          "summary": "Viết prompt mô tả nhân vật cụ thể: bé gái mầm non, mũ len vàng, nụ cười rạng rỡ."
+        },
+        {
+          "id": "c3",
+          "time": "04:30",
+          "seconds": 270,
+          "title": "Giữ nhân vật nhất quán qua nhiều trang truyện",
+          "summary": "Cố định từ khóa ngoại hình, chỉ thay đổi bối cảnh và động tác của bé."
+        },
+        {
+          "id": "c4",
+          "time": "08:20",
+          "seconds": 500,
+          "title": "Thêm lời thoại & font chữ mầm non chuẩn",
+          "summary": "Dùng font Quicksand hoặc Nunito, cỡ chữ lớn, lời thoại 4 câu có vần điệu."
+        },
+        {
+          "id": "c5",
+          "time": "10:45",
+          "seconds": 645,
+          "title": "Xuất bản và in ấn học liệu thực tế",
+          "summary": "Xuất file PDF Print, đóng cuốn lò xo hoặc ép plastic cho trẻ lật mở."
+        }
+      ],
+      "summary": [
+        "Nắm vững 3 bước tạo truyện tranh AI từ ý tưởng đến bản in hoàn chỉnh.",
+        "Bí quyết giữ nhân vật không bị biến đổi mặt mũi qua từng trang sách.",
+        "Lựa chọn cỡ chữ và lời thoại phù hợp với nhận thức của trẻ 3-5 tuổi."
+      ],
+      "keywords": [
+        "Canva AI",
+        "Sách tranh mầm non",
+        "Nhân vật nhất quán",
+        "Kể chuyện sáng tạo"
+      ],
+      "studyMaterials": [
+        {
+          "id": "mat-1",
+          "title": "Bộ Prompt Mẫu Tạo Nhân Vật 3D Trên Canva",
+          "type": "prompt",
+          "description": "10 câu lệnh tiếng Việt và tiếng Anh chuẩn đã kiểm chứng"
+        },
+        {
+          "id": "mat-2",
+          "title": "Template Sách Tranh 'Chuyến Đi Vườn Cam Của Bé Mai'",
+          "type": "canva",
+          "description": "Link Canva mẫu 8 trang có thể nhân bản và chỉnh sửa"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Để nhân vật không bị đổi mặt qua các trang, cô cần cố định yếu tố nào trong câu lệnh?",
+          "options": [
+            "Tên nhân vật, trang phục và từ khóa phong cách nhận diện",
+            "Chỉ cần tải lại trang Canva nhiều lần",
+            "Chọn ảnh bất kỳ trên mạng rồi dán vào"
+          ],
+          "correctIndex": 0,
+          "explanation": "Cố định từ khóa nhận diện (trang phục, kiểu tóc, phong cách 3D clay) là bí quyết giúp AI giữ đúng khuôn mặt nhân vật qua nhiều bối cảnh khác nhau."
+        },
+        {
+          "question": "Font chữ nào phù hợp nhất cho lời thoại sách tranh mầm non?",
+          "options": [
+            "Font thư pháp uốn lượn phức tạp",
+            "Font tròn trịa, không chân dễ đọc như Nunito hoặc Quicksand",
+            "Font chữ in hoa toàn bộ viết liền"
+          ],
+          "correctIndex": 1,
+          "explanation": "Font chữ không chân, tròn trịa giúp mắt trẻ mầm non dễ nhận biết mặt chữ và cô giáo đọc to không bị rối mắt."
+        }
+      ],
+      "suggestedQuestions": [
+        "Đoạn nào hướng dẫn viết prompt tạo nhân vật?",
+        "Làm sao xuất file để in ấn màu sắc không bị nhạt?",
+        "Có thể đổi màu áo của nhân vật ở trang 3 được không?"
+      ],
+      "knowledgeChunks": [
+        {
+          "chunkId": "chunk-1",
+          "timestamp": "01:15 - 04:30",
+          "content": "Kỹ thuật viết prompt tạo nhân vật trên Canva Magic Media: Nhập mô tả 'Một bé gái 4 tuổi người Việt Nam, tóc buộc hai bên, mặc váy cam pastel, phong cách hoạt hình 3D đất sét Pixar mềm mại, mắt to tròn, đang cười tươi'."
+        },
+        {
+          "chunkId": "chunk-2",
+          "timestamp": "04:30 - 08:20",
+          "content": "Bí quyết giữ nhân vật nhất quán: Luôn copy đoạn prompt mô tả nhân vật của trang 1 sang các trang tiếp theo, chỉ thay đổi phần đuôi mô tả hành động (ví dụ: 'đang ngửi quả cam', 'đang giơ tay chào bạn')."
+        }
+      ]
+    },
+    "comments": [
+      {
+        "id": "cmt-1",
+        "authorName": "Cô Nguyễn Mai Hương",
+        "authorSchool": "MN Họa Mi, Đà Nẵng",
+        "authorAvatar": "🌼",
+        "content": "Video hướng dẫn rất chi tiết cô ơi! Em đã áp dụng làm xong cuốn truyện Thỏ Trắng cho lớp Mầm, các bé mê tít!",
+        "createdAt": "2 ngày trước",
+        "likes": 14
+      },
+      {
+        "id": "cmt-2",
+        "authorName": "Cô Trần Thị Thu",
+        "authorSchool": "MN Sao Mai, TP.HCM",
+        "authorAvatar": "🌻",
+        "content": "Nhờ mẹo giữ nhân vật nhất quán của cô mà em không còn bị tình trạng mỗi trang một mặt nữa. Cảm ơn cô Vân nhiều!",
+        "createdAt": "Hôm qua",
+        "likes": 8
+      }
+    ]
+  },
+  {
+    "id": "vid_chatgpt_prompt_02",
+    "title": "Viết prompt ChatGPT chuẩn 5 bước giáo án mầm non",
+    "description": "Hướng dẫn cấu trúc câu lệnh AI sư phạm để tạo mục tiêu kiến thức, kỹ năng, thái độ và tiến trình 5 bước lấy trẻ làm trung tâm.",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
+    "duration": "15:20",
+    "durationSeconds": 920,
+    "topic": "ChatGPT",
+    "level": "Cơ bản",
+    "targetAudience": "Toàn bộ giáo viên mầm non",
+    "tags": [
+      "ChatGPT",
+      "GiaoAnAI",
+      "SoanBai",
+      "MamNon"
+    ],
+    "courseId": "course-1",
+    "lessonId": "c1-l2",
+    "privacy": "public",
+    "authorId": "user-02",
+    "authorName": "Cô Trần Thu Hà",
+    "authorSchool": "MN Tuổi Thơ, Hải Phòng",
+    "authorAvatar": "🌺",
+    "createdAt": "2026-09-18T09:00:00.000Z",
+    "updatedAt": "2026-09-24T16:00:00.000Z",
+    "status": "ready",
+    "views": 2180,
+    "learnersCount": 1050,
+    "savesCount": 540,
+    "aiQuestionsCount": 230,
+    "userProgress": {
+      "currentTime": 0,
+      "percentage": 0,
+      "completed": false,
+      "lastWatchedDate": "2026-09-26T08:00:00.000Z"
+    },
+    "aiKnowledge": {
+      "transcript": "00:00 - 02:30: Vì sao giáo án AI thường bị chung chung và cách khắc phục bằng Context Frame mầm non Việt Nam.\n02:30 - 07:00: Cấu trúc prompt 4 phần: Vai trò sư phạm, Đối tượng trẻ, Lĩnh vực phát triển, và Yêu cầu 5 bước chuẩn.\n07:00 - 11:30: Hướng dẫn tạo hệ thống câu hỏi gợi mở phát triển tư duy thay vì câu hỏi đóng Đúng/Sai.\n11:30 - 15:20: Cách tích hợp điều chỉnh hòa nhập cho trẻ cần hỗ trợ trực quan và tích hợp tiếng Anh tự nhiên.",
+      "chapters": [
+        {
+          "id": "c1",
+          "time": "00:00",
+          "seconds": 0,
+          "title": "Nguyên tắc cốt lõi: AI hỗ trợ, cô kiểm định",
+          "summary": "Không sao chép nguyên văn, luôn đối chiếu với chương trình giáo dục mầm non nhà trường."
+        },
+        {
+          "id": "c2",
+          "time": "02:30",
+          "seconds": 150,
+          "title": "Công thức Prompt 4 tầng chuẩn sư phạm",
+          "summary": "Role + Audience + Domain + Output Constraint."
+        },
+        {
+          "id": "c3",
+          "time": "07:00",
+          "seconds": 420,
+          "title": "Sinh câu hỏi gợi mở đàm thoại tư duy",
+          "summary": "Tránh câu hỏi Có/Không, tập trung vào Vì sao, Con cảm thấy thế nào, Nếu như."
+        },
+        {
+          "id": "c4",
+          "time": "11:30",
+          "seconds": 690,
+          "title": "Tích hợp đa dạng và giáo dục hòa nhập",
+          "summary": "Hỗ trợ trẻ nhút nhát, trẻ hiếu động và trẻ cần tranh ảnh trực quan."
+        }
+      ],
+      "summary": [
+        "Cách đưa bối cảnh mầm non Việt Nam vào câu lệnh AI.",
+        "Phương pháp yêu cầu AI phân bổ thời gian hợp lý (3-5 phút ổn định, 15 phút trọng tâm).",
+        "Bộ câu hỏi gợi mở kích thích trí tưởng tượng của bé."
+      ],
+      "keywords": [
+        "ChatGPT",
+        "Giáo án mầm non",
+        "Prompt chuẩn",
+        "Câu hỏi gợi mở"
+      ],
+      "studyMaterials": [
+        {
+          "id": "mat-3",
+          "title": "Bảng Từ Điển Prompt Soạn Giáo Án 5 Lĩnh Vực",
+          "type": "pdf",
+          "description": "Tài liệu PDF 12 trang gồm mẫu câu lệnh chi tiết từng độ tuổi"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Cấu trúc prompt nào giúp ChatGPT tạo giáo án đúng chuẩn mầm non nhất?",
+          "options": [
+            "Chỉ gõ 'Viết giáo án quả cam'",
+            "Xác định rõ: Vai trò chuyên gia + Độ tuổi + Lĩnh vực + Chuẩn 5 bước Bộ GD&ĐT",
+            "Nhập bài hát mầm non rồi bảo AI phân tích"
+          ],
+          "correctIndex": 1,
+          "explanation": "Cung cấp đầy đủ vai trò, đối tượng cụ thể (lớp Chồi 4-5 tuổi) và tiêu chuẩn 5 bước giúp AI đưa ra tiến trình chính xác, bám sát sư phạm."
+        }
+      ],
+      "suggestedQuestions": [
+        "Làm sao để AI không sinh ra kiến thức quá khó với trẻ 3 tuổi?",
+        "Cách yêu cầu AI bổ sung trò chơi vận động chuyển tiếp giữa 2 hoạt động?"
+      ],
+      "knowledgeChunks": [
+        {
+          "chunkId": "chunk-p1",
+          "timestamp": "02:30 - 07:00",
+          "content": "Prompt mẫu chuẩn: 'Bạn là chuyên gia giáo dục mầm non Việt Nam. Hãy soạn giáo án lĩnh vực Nhận thức cho lớp Chồi 4-5 tuổi, chủ đề Khám phá quả cam trong 25 phút. Yêu cầu chia rõ hoạt động của cô, hoạt động của trẻ và câu hỏi gợi mở'."
+        }
+      ]
+    },
+    "comments": []
+  },
+  {
+    "id": "vid_powerpoint_game_03",
+    "title": "Tạo trò chơi tương tác PowerPoint mầm non bằng AI",
+    "description": "Biến hình ảnh và câu đố do AI tạo thành trò chơi lật mảnh ghép, vòng quay may mắn và phân loại đồ vật vui nhộn trên PowerPoint.",
+    "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    "thumbnailUrl": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&auto=format&fit=crop&q=80",
+    "duration": "14:10",
+    "durationSeconds": 850,
+    "topic": "PowerPoint",
+    "level": "Trung bình",
+    "targetAudience": "Giáo viên Lớp Chồi & Lá (4–6 tuổi)",
+    "tags": [
+      "PowerPoint",
+      "TroChoi",
+      "TuongTac",
+      "CongNghe"
+    ],
+    "courseId": "course-3",
+    "lessonId": "c3-l1",
+    "privacy": "public",
+    "authorId": "user-01",
+    "authorName": "Cô Lê Hồng Vân",
+    "authorSchool": "Trường Mầm non Liên Minh A",
+    "authorAvatar": "🌸",
+    "createdAt": "2026-09-22T11:20:00.000Z",
+    "updatedAt": "2026-09-25T10:00:00.000Z",
+    "status": "ready",
+    "views": 980,
+    "learnersCount": 460,
+    "savesCount": 210,
+    "aiQuestionsCount": 95,
+    "userProgress": {
+      "currentTime": 0,
+      "percentage": 0,
+      "completed": false,
+      "lastWatchedDate": "2026-09-27T14:00:00.000Z"
+    },
+    "aiKnowledge": {
+      "transcript": "00:00 - 03:00: Tải bộ icon 3D từ AI về và chèn vào PowerPoint.\n03:00 - 08:00: Kỹ thuật tạo Trigger bấm vào đâu đổi màu hoặc biến mất mảnh ghép.\n08:00 - 12:00: Chèn âm thanh vỗ tay và nhạc nền hào hứng khi bé trả lời đúng.\n12:00 - 14:10: Lưu định dạng PPSX để cô chỉ cần 1 cú click là vào ngay chế độ trình chiếu.",
+      "chapters": [
+        {
+          "id": "c1",
+          "time": "00:00",
+          "seconds": 0,
+          "title": "Chuẩn bị hình ảnh học liệu từ AI",
+          "summary": "Tách nền ảnh png và đưa vào các slide PowerPoint."
+        },
+        {
+          "id": "c2",
+          "time": "03:00",
+          "seconds": 180,
+          "title": "Thiết lập Trigger tương tác chạm mở",
+          "summary": "Khi bé chạm vào thẻ hình, thẻ sẽ xoay mở ra đáp án."
+        },
+        {
+          "id": "c3",
+          "time": "08:00",
+          "seconds": 480,
+          "title": "Âm thanh phản hồi tích cực",
+          "summary": "Chèn tiếng chuông ting-ting hoặc tiếng vỗ tay khen ngợi."
+        }
+      ],
+      "summary": [
+        "Cách tạo game tương tác không cần lập trình phức tạp.",
+        "Thiết lập Trigger trong PowerPoint trong 3 phút.",
+        "Xuất file trình chiếu PPSX tiện lợi trên lớp."
+      ],
+      "keywords": [
+        "PowerPoint",
+        "Trò chơi mầm non",
+        "Trigger",
+        "Tương tác"
+      ],
+      "studyMaterials": [
+        {
+          "id": "mat-4",
+          "title": "File PowerPoint Mẫu Game 'Ai Nhanh Mắt'",
+          "type": "ppt",
+          "description": "Template PPTX đã cài sẵn âm thanh và hiệu ứng trigger"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "Định dạng file PowerPoint nào giúp cô mở ra là chơi ngay không lộ trang chỉnh sửa?",
+          "options": [
+            "File .DOCX",
+            "File .PPSX (PowerPoint Show)",
+            "File .TXT"
+          ],
+          "correctIndex": 1,
+          "explanation": "Định dạng .PPSX tự động mở toàn màn hình trình chiếu giúp tiết kiệm thời gian khi lên lớp và tránh làm trẻ mất tập trung."
+        }
+      ],
+      "suggestedQuestions": [
+        "Làm sao chỉnh âm lượng tiếng vỗ tay vừa phải trong lớp mầm non?"
+      ],
+      "knowledgeChunks": []
+    },
+    "comments": []
+  }
+]

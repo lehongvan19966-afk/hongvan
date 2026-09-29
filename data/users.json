@@ -1,0 +1,65 @@
+[
+  {
+    "id": "user-001",
+    "name": "Cô Lê Hồng Vân",
+    "email": "lehongvan19966@gmail.com",
+    "passwordHash": "71829015e6d461a39d41cce6fe9730d3e98ec2e879dde84d142d10e65570a0b042767fd09f38e36ed991c5b40a5ed89a42e81910504e4b46f0e1e225112fc4ca",
+    "salt": "6b7b2bb640f2acf8e990f3a70a33d4be",
+    "role": "teacher",
+    "school": "Trường Mầm non Liên Minh A",
+    "ageGroup": "4–5 tuổi (Lớp Chồi)",
+    "aiInterests": [
+      "Tạo tranh minh họa",
+      "Soạn giáo án",
+      "English Buddy"
+    ],
+    "aiLevel": "intermediate",
+    "streakDays": 7,
+    "xp": 1450,
+    "badges": [
+      "badge-mam",
+      "badge-creative",
+      "badge-english"
+    ],
+    "avatar": "👩‍🏫",
+    "isEmailVerified": true,
+    "phone": "0987654321",
+    "bio": "Giáo viên mầm non say mê sáng tạo học liệu AI và lan tỏa tình yêu con trẻ.",
+    "provider": "email",
+    "savedPlans": [],
+    "bookmarkedVideoIds": [],
+    "createdAt": "2026-09-29T01:23:25.184Z",
+    "updatedAt": "2026-09-29T03:24:34.099Z",
+    "sessionToken": "vuon_c6b5d160f7e0304231e4185ec81dde8f56e0930cff961ca7"
+  },
+  {
+    "id": "usr_1790645005186",
+    "name": "Cô Nguyễn Thu Hà",
+    "email": "thuha.mamnon@gmail.com",
+    "passwordHash": "39fd43b06499fe63c31c1a7bd43713722a025d75c5a9a23f6c496f2ee375531d830f9f7232962b10bdac432ae2a4f79dbed0cca94288dd05c410f9533aec3c67",
+    "salt": "20ce019f0eacd23cd45e1d0457a06479",
+    "role": "teacher",
+    "school": "Trường Mầm Non Ánh Sao",
+    "ageGroup": "4–5 tuổi (Lớp Chồi)",
+    "aiInterests": [
+      "Tạo tranh minh họa",
+      "Soạn giáo án"
+    ],
+    "aiLevel": "beginner",
+    "streakDays": 1,
+    "xp": 100,
+    "badges": [
+      "badge-mam"
+    ],
+    "avatar": "🌸",
+    "isEmailVerified": true,
+    "sessionToken": "vuon_35f58f54c28dc1d7e05b315ca6dc7b6330ba7131d23f1380",
+    "lastVerificationSentAt": 1790645005186,
+    "savedPlans": [],
+    "bookmarkedVideoIds": [],
+    "createdAt": "2026-09-29T01:23:25.186Z",
+    "updatedAt": "2026-09-29T01:24:22.836Z",
+    "phone": "0912345678",
+    "bio": "Yêu mến trẻ nhỏ và công nghệ giáo dục"
+  }
+]
