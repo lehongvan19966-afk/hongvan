@@ -66,10 +66,15 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
           {[
             { id: 'home', label: 'Trang chủ' },
-            { id: 'academy', label: 'Học AI' },
+            { id: 'ai-assistant', label: '🤖 Trợ lý AI mầm non' },
+            { id: 'interactive-games', label: 'Kho game tương tác' },
+            { id: 'academy', label: 'Hướng dẫn học AI' },
+            { id: 'daily-practice', label: 'Luyện AI' },
             { id: 'lesson-studio', label: 'Soạn giáo án' },
             { id: 'english-buddy', label: 'English Buddy' },
-            { id: 'teaching-pack', label: 'Teaching Pack' },
+            { id: 'story-poem-creator', label: 'Tạo thơ truyện AI' },
+            { id: 'be-vui-hoc', label: '🎨 Bé vui học' },
+            { id: 'teaching-pack', label: 'Tủ tài liệu' },
             { id: 'library', label: 'Kho học liệu' },
             { id: 'community', label: 'Cộng đồng' },
           ].map((item) => {
@@ -127,11 +132,13 @@ export const Header: React.FC<HeaderProps> = ({
           {onOpenShare && (
             <button
               onClick={onOpenShare}
-              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-xl text-orange-700 bg-orange-50 hover:bg-orange-100 hover:text-orange-900 border border-orange-200 active:scale-95 transition-all cursor-pointer"
-              title="Chia sẻ ứng dụng & quét mã QR (Điện thoại & Máy tính)"
-              aria-label="Chia sẻ"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black text-orange-950 bg-gradient-to-r from-amber-100 to-orange-100 hover:from-amber-200 hover:to-orange-200 border border-orange-300 shadow-2xs active:scale-95 transition-all cursor-pointer font-['Quicksand']"
+              title="Lấy đường link xem trên điện thoại & máy tính (kèm mã QR)"
+              aria-label="Lấy link & mã QR"
             >
-              <Share2 className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+              <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-700 shrink-0" />
+              <span className="hidden sm:inline">Lấy link / Quét QR</span>
+              <span className="sm:hidden">Lấy link</span>
             </button>
           )}
 

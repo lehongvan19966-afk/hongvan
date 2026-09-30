@@ -1195,9 +1195,9 @@ export const LessonStudioView: React.FC<LessonStudioViewProps> = ({
                         </div>
                         <button
                           type="button"
-                          onClick={() => speakText(v.word)}
+                          onClick={() => speakText(`Từ ${v.meaning || v.word} nè cô và các bạn ơi!`, 1.05, 'vi-VN')}
                           className="w-7 h-7 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 flex items-center justify-center transition-colors cursor-pointer"
-                          title="Phát âm chuẩn"
+                          title="Bé nghe đọc bằng tiếng Việt"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
                         </button>

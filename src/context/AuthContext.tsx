@@ -25,6 +25,12 @@ interface AuthContextType {
   authModalMessage: string;
   openAuthModal: (mode?: 'login' | 'register' | 'verify' | 'forgot', message?: string) => void;
   closeAuthModal: () => void;
+  // Post-Login Welcome & Emotion Flow (Bảng riêng sau khi đăng nhập)
+  showPostLoginModal: boolean;
+  openPostLoginModal: () => void;
+  closePostLoginModal: () => void;
+  todayEmotion: 'vui' | 'buon' | 'de-thuong' | null;
+  setTodayEmotion: (emotion: 'vui' | 'buon' | 'de-thuong') => void;
   setUser: React.Dispatch<React.SetStateAction<UserProfile>>;
 }
 
@@ -39,6 +45,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | 'verify' | 'forgot'>('login');
   const [authModalMessage, setAuthModalMessage] = useState<string>('');
+
+  // Post-login board & Emotion state
+  const [showPostLoginModal, setShowPostLoginModal] = useState<boolean>(false);
+  const [todayEmotion, setTodayEmotionState] = useState<'vui' | 'buon' | 'de-thuong' | null>(() => {
+    try {
+      return (localStorage.getItem('mam_ai_today_emotion') as any) || null;
+    } catch {
+      return null;
+    }
+  });
+
+  const setTodayEmotion = (emotion: 'vui' | 'buon' | 'de-thuong') => {
+    setTodayEmotionState(emotion);
+    try {
+      localStorage.setItem('mam_ai_today_emotion', emotion);
+    } catch {}
+  };
+
+  const openPostLoginModal = () => setShowPostLoginModal(true);
+  const closePostLoginModal = () => setShowPostLoginModal(false);
 
   const isEmailVerified = Boolean(user.isEmailVerified);
 
@@ -127,6 +153,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(res.user);
       setIsAuthenticated(true);
       closeAuthModal();
+      setShowPostLoginModal(true);
     }
     setIsLoading(false);
     return res;
@@ -152,6 +179,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(res.user);
       setIsAuthenticated(true);
       closeAuthModal();
+      setShowPostLoginModal(true);
     }
     setIsLoading(false);
     return res;
@@ -244,6 +272,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authModalMessage,
         openAuthModal,
         closeAuthModal,
+        showPostLoginModal,
+        openPostLoginModal,
+        closePostLoginModal,
+        todayEmotion,
+        setTodayEmotion,
         setUser,
       }}
     >

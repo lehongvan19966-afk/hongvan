@@ -25,6 +25,12 @@ import {
 } from 'lucide-react';
 import { speakText, sounds } from '../utils/audioUtils';
 import { MamAiMascot } from './MamAiMascot';
+import { StickerItem, GameHonorRecord, KidRank } from '../types/englishBuddy';
+import { PRESCHOOL_STICKERS, INITIAL_HONOR_LEADERBOARD } from '../data/stickersData';
+import { saveTodayGameRecord, getTodayGameRecords } from '../services/englishHonorStorage';
+import { KidNameModal } from './KidNameModal';
+import { HonorCelebrationModal } from './HonorCelebrationModal';
+import { StickerBackpackModal } from './StickerBackpackModal';
 
 export interface VocabItem {
   word: string;
@@ -72,6 +78,65 @@ export const EnglishPlayZone: React.FC<EnglishPlayZoneProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedAge, setSelectedAge] = useState<string>(currentAgeGroup);
 
+  // Kid Profile, Scoring & Sticker State
+  const [kidName, setKidName] = useState<string>(() => {
+    try {
+      return localStorage.getItem('english_buddy_kid_name') || 'Bé Bống';
+    } catch {
+      return 'Bé Bống';
+    }
+  });
+
+  const [kidAvatar, setKidAvatar] = useState<string>(() => {
+    try {
+      return localStorage.getItem('english_buddy_kid_avatar') || '👧';
+    } catch {
+      return '👧';
+    }
+  });
+
+  const [sessionScore, setSessionScore] = useState<number>(0);
+  const [isKidNameModalOpen, setIsKidNameModalOpen] = useState<boolean>(false);
+  const [isHonorModalOpen, setIsHonorModalOpen] = useState<boolean>(false);
+  const [isBackpackModalOpen, setIsBackpackModalOpen] = useState<boolean>(false);
+  const [currentHonorRecord, setCurrentHonorRecord] = useState<GameHonorRecord | null>(null);
+
+  // Sync kid profile when selected from right-hand honor board
+  useEffect(() => {
+    const handleKidChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ name: string; avatar: string }>;
+      if (customEvent.detail) {
+        setKidName(customEvent.detail.name);
+        setKidAvatar(customEvent.detail.avatar);
+        setSessionScore(0);
+      }
+    };
+    window.addEventListener('english_buddy_kid_changed', handleKidChange);
+    return () => window.removeEventListener('english_buddy_kid_changed', handleKidChange);
+  }, []);
+
+  // Collected stickers
+  const [collectedStickers, setCollectedStickers] = useState<StickerItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('english_buddy_stickers');
+      if (saved) return JSON.parse(saved);
+      return [PRESCHOOL_STICKERS[0], PRESCHOOL_STICKERS[1]];
+    } catch {
+      return [PRESCHOOL_STICKERS[0], PRESCHOOL_STICKERS[1]];
+    }
+  });
+
+  // Class leaderboard
+  const [leaderboard, setLeaderboard] = useState<GameHonorRecord[]>(() => {
+    try {
+      const saved = localStorage.getItem('english_buddy_leaderboard');
+      if (saved) return JSON.parse(saved);
+      return INITIAL_HONOR_LEADERBOARD;
+    } catch {
+      return INITIAL_HONOR_LEADERBOARD;
+    }
+  });
+
   // Filter recommendations based on age
   const getGameRecommendation = (game: GameType) => {
     if (selectedAge.includes('3–4') || selectedAge.includes('Nhà trẻ')) {
@@ -91,16 +156,105 @@ export const EnglishPlayZone: React.FC<EnglishPlayZoneProps> = ({
 
   const fireCelebration = () => {
     sounds.playSuccess();
+    setSessionScore((prev) => prev + 20);
     try {
       confetti({
-        particleCount: 60,
-        spread: 70,
+        particleCount: 50,
+        spread: 65,
         origin: { y: 0.6 },
         colors: ['#f97316', '#eab308', '#22c55e', '#3b82f6', '#ec4899'],
       });
     } catch {
       // fallback safe
     }
+  };
+
+  const getGameTitle = (game: GameType) => {
+    switch (game) {
+      case 'look_and_choose': return 'Nhìn & Chọn từ';
+      case 'listen_and_choose': return 'Nghe & Chọn hình';
+      case 'word_to_picture': return 'Ghép từ với hình';
+      case 'trace_letter': return 'Bé tô chữ cái';
+      case 'build_word': return 'Xếp chữ thành từ';
+      case 'first_letter': return 'Tìm chữ cái đầu';
+      case 'memory_cards': return 'Lật thẻ ghi nhớ';
+      default: return 'Trò chơi tiếng Anh';
+    }
+  };
+
+  // Hoàn thành lượt chơi, tính điểm, xếp loại vinh danh và tặng sticker
+  const handleFinishRound = () => {
+    if (!kidName.trim()) {
+      setIsKidNameModalOpen(true);
+      return;
+    }
+
+    const calculatedScore = sessionScore > 0 ? sessionScore : 60;
+    const finalScore = Math.min(calculatedScore, 100);
+    const maxScore = 100;
+    const rank: KidRank = finalScore >= 80 ? 'xuat_sac' : finalScore >= 60 ? 'gioi' : 'kha';
+    const stars = finalScore >= 80 ? 3 : finalScore >= 60 ? 2 : 1;
+    const rankTitle =
+      rank === 'xuat_sac'
+        ? '🌟 XUẤT SẮC - Ngôi Sao Tiếng Anh Nhí'
+        : rank === 'gioi'
+        ? '🌸 GIỎI - Bé Siêu Cố Gắng'
+        : '🌼 KHÁ - Bé Tiến Bộ Vượt Bậc';
+
+    // Pick next uncollected sticker or random
+    const uncollected = PRESCHOOL_STICKERS.filter(
+      (s) => !collectedStickers.some((cs) => cs.id === s.id)
+    );
+    const newSticker =
+      uncollected.length > 0
+        ? uncollected[Math.floor(Math.random() * uncollected.length)]
+        : PRESCHOOL_STICKERS[Math.floor(Math.random() * PRESCHOOL_STICKERS.length)];
+
+    const updatedStickers = [
+      ...collectedStickers,
+      {
+        ...newSticker,
+        unlockedAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+      },
+    ];
+    setCollectedStickers(updatedStickers);
+    try {
+      localStorage.setItem('english_buddy_stickers', JSON.stringify(updatedStickers));
+    } catch {}
+
+    const newRecord: GameHonorRecord = {
+      id: 'hon_' + Date.now(),
+      kidName: kidName.trim(),
+      kidAvatar: kidAvatar,
+      gameTitle: getGameTitle(activeGame),
+      score: finalScore,
+      maxScore,
+      stars,
+      rank,
+      rankTitle,
+      stickerEarned: newSticker,
+      timestamp: 'Vừa xong, ' + new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setCurrentHonorRecord(newRecord);
+    saveTodayGameRecord(newRecord);
+    const updatedLeaderboard = [newRecord, ...leaderboard.slice(0, 19)];
+    setLeaderboard(updatedLeaderboard);
+    try {
+      localStorage.setItem('english_buddy_leaderboard', JSON.stringify(updatedLeaderboard));
+    } catch {}
+
+    setIsHonorModalOpen(true);
+  };
+
+  const handleSaveKidName = (name: string, avatar: string) => {
+    setKidName(name);
+    setKidAvatar(avatar);
+    setSessionScore(0);
+    try {
+      localStorage.setItem('english_buddy_kid_name', name);
+      localStorage.setItem('english_buddy_kid_avatar', avatar);
+    } catch {}
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -189,6 +343,90 @@ export const EnglishPlayZone: React.FC<EnglishPlayZoneProps> = ({
               Đóng
             </button>
           )}
+        </div>
+      </div>
+
+      {/* KID PROFILE, SCORING & STICKER ACTION BAR */}
+      <div className="my-3 p-3 sm:p-3.5 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 rounded-2xl border-2 border-orange-200/90 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+        {/* Kid Info with Name input trigger */}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => {
+              sounds.playPop();
+              setIsKidNameModalOpen(true);
+            }}
+            className="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-orange-50 rounded-xl border border-orange-200 shadow-2xs transition-all cursor-pointer hover:scale-102 group"
+            title="Bấm để đổi tên hoặc chọn hình bé trước khi chơi"
+          >
+            <span className="text-2xl filter drop-shadow-xs">{kidAvatar}</span>
+            <div className="text-left">
+              <span className="text-[10px] font-bold text-stone-400 block leading-tight">
+                Bé đang luyện tập:
+              </span>
+              <span className="font-black font-bubbly text-xs sm:text-sm text-stone-900 group-hover:text-orange-600 block leading-tight">
+                {kidName || 'Chưa nhập tên bé (Bấm để nhập)'} ✏️
+              </span>
+            </div>
+          </button>
+        </div>
+
+        {/* Live Score & Backpack & Leaderboard & Finish Round */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Live Score Counter */}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-xl border border-amber-200 shadow-2xs font-bubbly text-xs font-black text-amber-900">
+            <Star className="w-4 h-4 text-amber-500 fill-amber-400 animate-pulse" />
+            <span>Điểm bé:</span>
+            <span className="text-sm font-black text-orange-600">{sessionScore} đ</span>
+          </div>
+
+          {/* Sticker Backpack Trigger */}
+          <button
+            onClick={() => {
+              sounds.playPop();
+              setIsBackpackModalOpen(true);
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-amber-50 rounded-xl border border-amber-200 shadow-2xs font-bubbly text-xs font-black text-stone-800 transition-all cursor-pointer hover:scale-102"
+            title="Xem bộ sưu tập sticker bé đã đạt được"
+          >
+            <span className="text-sm">🎒</span>
+            <span>Ba lô:</span>
+            <span className="text-xs px-2 py-0.2 rounded-full bg-rose-100 text-rose-700 font-black">
+              {collectedStickers.length} stickers
+            </span>
+          </button>
+
+          {/* Leaderboard button */}
+          <button
+            onClick={() => {
+              sounds.playPop();
+              if (currentHonorRecord) {
+                setIsHonorModalOpen(true);
+              } else if (leaderboard.length > 0) {
+                setCurrentHonorRecord(leaderboard[0]);
+                setIsHonorModalOpen(true);
+              } else {
+                handleFinishRound();
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-amber-50 rounded-xl border border-amber-200 shadow-2xs font-bubbly text-xs font-black text-amber-900 transition-all cursor-pointer hover:scale-102"
+            title="Bảng vàng vinh danh cả lớp"
+          >
+            <Trophy className="w-3.5 h-3.5 text-amber-500" />
+            <span>Bảng Vàng 🏆</span>
+          </button>
+
+          {/* Finish Round & Honor Button */}
+          <button
+            onClick={() => {
+              sounds.playSuccess();
+              handleFinishRound();
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl shadow-md shadow-orange-500/25 font-bubbly text-xs font-black transition-all cursor-pointer hover:scale-105 active:scale-95 border border-white"
+            title="Hoàn thành lượt chơi để vinh danh xếp loại và nhận sticker mới"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Vinh danh & Nhận Sticker 🎁</span>
+          </button>
         </div>
       </div>
 
@@ -350,6 +588,45 @@ export const EnglishPlayZone: React.FC<EnglishPlayZoneProps> = ({
           <span>Vườn Ươm AI</span>
         </div>
       </div>
+
+      {/* 1. Modal Nhập Tên Bé Trước Khi Chơi */}
+      <KidNameModal
+        isOpen={isKidNameModalOpen}
+        onClose={() => setIsKidNameModalOpen(false)}
+        currentName={kidName}
+        currentAvatar={kidAvatar}
+        onSave={handleSaveKidName}
+      />
+
+      {/* 2. Modal Xếp Loại Vinh Danh & Nhận Sticker */}
+      <HonorCelebrationModal
+        isOpen={isHonorModalOpen}
+        onClose={() => setIsHonorModalOpen(false)}
+        record={currentHonorRecord}
+        onPlayAgain={() => {
+          setIsHonorModalOpen(false);
+          setSessionScore(0);
+        }}
+        onChangeKid={() => {
+          setIsHonorModalOpen(false);
+          setIsKidNameModalOpen(true);
+        }}
+        onOpenBackpack={() => {
+          setIsHonorModalOpen(false);
+          setIsBackpackModalOpen(true);
+        }}
+        leaderboard={leaderboard}
+      />
+
+      {/* 3. Modal Ba Lô Sticker Của Bé */}
+      <StickerBackpackModal
+        isOpen={isBackpackModalOpen}
+        onClose={() => setIsBackpackModalOpen(false)}
+        kidName={kidName || 'Bé Yêu'}
+        kidAvatar={kidAvatar}
+        collectedStickers={collectedStickers}
+        totalScore={sessionScore}
+      />
     </div>
   );
 };

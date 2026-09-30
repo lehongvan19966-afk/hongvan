@@ -3,10 +3,13 @@ import React from 'react';
 export type ChibiCharacterId =
   | 'mai-lesson'      // Bé gái Mai - Soạn giáo án
   | 'bi-magic'        // Bé trai Bi - Học liệu thần kỳ
-  | 'linh-academy'    // Bé gái Linh - Học viện AI
+  | 'linh-academy'    // Bé gái Linh - Hướng dẫn học AI từ cơ bản đến nâng cao
   | 'nam-english'     // Bé trai Nam - English Buddy
   | 'an-pack'         // Bé gái An - Teaching Pack
-  | 'bo-library';     // Bé trai Bo - Kho học liệu
+  | 'bo-library'      // Bé trai Bo - Kho học liệu
+  | 'phuc-practice'   // Bé trai Phúc - Luyện AI mỗi ngày
+  | 'dung-video'      // Bé trai Dũng - Video Thơ & Truyện AI
+  | 'lan-community';  // Bé gái Lan - Cộng đồng kết nối mầm non
 
 interface ChibiPreschoolKidProps {
   id: ChibiCharacterId;
@@ -656,6 +659,291 @@ export const ChibiPreschoolKid: React.FC<ChibiPreschoolKidProps> = ({
           {/* Joyful Grin */}
           <path d="M 45 42 Q 50 50, 55 42 Z" fill="#DC2626" />
           <rect x="47" y="42" width="6" height="2" rx="0.5" fill="#FFFFFF" />
+        </svg>
+      );
+    }
+
+    case 'dung-video': {
+      // Bé trai Dũng - Mặc áo phông cam, quần sooc nâu nhạt, cầm máy quay phim mini đáng yêu
+      return (
+        <svg
+          viewBox="0 0 100 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-full h-full drop-shadow-md select-none transition-transform duration-300 ${
+            isHovered ? 'animate-chibi-dance' : ''
+          } ${className}`}
+        >
+          {/* Legs & Shoes */}
+          <rect x="40" y="88" width="6.5" height="18" rx="3" fill={SKIN_TONE} />
+          <ellipse cx="42" cy="107" rx="7" ry="5" fill={SHOES_WHITE} />
+          <path d="M 36 107 Q 42 104, 48 107" stroke={SHOES_ORANGE} strokeWidth="2" strokeLinecap="round" />
+
+          <rect x="53.5" y="88" width="6.5" height="18" rx="3" fill={SKIN_TONE} />
+          <ellipse cx="58" cy="107" rx="7" ry="5" fill={SHOES_WHITE} />
+          <path d="M 52 107 Q 58 104, 64 107" stroke={SHOES_ORANGE} strokeWidth="2" strokeLinecap="round" />
+
+          {/* Quần sooc nâu nhạt bé trai */}
+          <path
+            d="M 37 74 L 63 74 L 64 89 L 52 89 L 50 82 L 48 89 L 36 89 Z"
+            fill={BROWN_BOTTOM}
+          />
+          <path d="M 50 74 L 50 82" stroke={BROWN_SHADOW} strokeWidth="1.5" />
+          <rect x="36" y="72" width="28" height="3" rx="1.5" fill={BROWN_SHADOW} />
+
+          {/* Body: Áo phông cam */}
+          <path
+            d="M 34 52 L 66 52 L 63 74 L 37 74 Z"
+            fill={SHIRT_ORANGE}
+          />
+          <path
+            d="M 43 52 C 43 57, 57 57, 57 52 Z"
+            fill={SHIRT_COLLAR}
+          />
+
+          {/* Cute Play Icon / Video reel badge on shirt */}
+          <circle cx="50" cy="63" r="4.5" fill="#FFFFFF" />
+          <polygon points="49,60 54,63 49,66" fill={SHIRT_ORANGE} />
+
+          {/* Left Arm: Cầm máy quay phim mini (Mini movie camera) */}
+          <path
+            d="M 34 55 Q 22 58, 20 66"
+            stroke={SHIRT_ORANGE}
+            strokeWidth="7"
+            strokeLinecap="round"
+          />
+          <circle cx="20" cy="67" r="4.5" fill={SKIN_TONE} />
+          {/* Mini video camera */}
+          <rect x="10" y="60" width="14" height="10" rx="2" fill="#0284C7" stroke="#FFFFFF" strokeWidth="1" />
+          <circle cx="14" cy="57" r="3" fill="#38BDF8" />
+          <circle cx="20" cy="57" r="3" fill="#38BDF8" />
+          <polygon points="24,63 29,60 29,70 24,67" fill="#0284C7" />
+          <circle cx="16" cy="65" r="2.5" fill="#FDE047" />
+
+          {/* Right Arm: Vẫy tay chào vui nhộn */}
+          <path
+            d="M 66 55 Q 78 50, 84 38"
+            stroke={SHIRT_ORANGE}
+            strokeWidth="7"
+            strokeLinecap="round"
+            className={isHovered ? 'animate-arm-wave origin-bottom-left' : ''}
+          />
+          <circle cx="85" cy="36" r="4.5" fill={SKIN_TONE} />
+          <circle cx="88" cy="34" r="1.5" fill={SKIN_TONE} />
+
+          {/* Head & Hair base */}
+          <circle cx="50" cy="36" r="23" fill={SKIN_TONE} />
+
+          {/* Short Dark Brown Hair with cute side fringe */}
+          <path
+            d="M 28 35 
+               C 27 18, 38 12, 50 11 
+               C 62 11, 73 18, 72 35
+               C 68 27, 60 26, 54 30 
+               C 48 25, 42 27, 36 32 Z"
+            fill="#2D1E16"
+          />
+          {/* Director Beret/Cap (Mũ beret nghệ sĩ xanh lam nhỏ xinh) */}
+          <path d="M 32 20 C 38 12, 62 12, 68 20 C 65 24, 35 24, 32 20 Z" fill="#0284C7" />
+          <circle cx="50" cy="13" r="2.5" fill="#FBBF24" />
+
+          {/* Big Sparkling Eyes */}
+          <ellipse cx="42" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="43.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="40.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          <ellipse cx="58" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="59.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="56.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          {/* Eyebrows */}
+          <path d="M 38 31 Q 42 29, 45 31" stroke="#2D1E16" strokeWidth="2" strokeLinecap="round" />
+          <path d="M 55 31 Q 58 29, 62 31" stroke="#2D1E16" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Rosy Cheeks */}
+          <ellipse cx="36" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.65" />
+          <ellipse cx="64" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.65" />
+
+          {/* Cheerful Smile */}
+          <path d="M 45 42 Q 50 49, 55 42" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" fill="#FCA5A5" />
+        </svg>
+      );
+    }
+
+    case 'phuc-practice': {
+      // Bé trai Phúc - Đeo băng rôn quyết tâm đỏ "AI", tay cầm bút lông thông minh và giơ tay chiến thắng
+      return (
+        <svg
+          viewBox="0 0 100 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-full h-full drop-shadow-md select-none transition-transform duration-300 ${
+            isHovered ? 'animate-chibi-dance' : ''
+          } ${className}`}
+        >
+          {/* Legs & Shoes */}
+          <rect x="40" y="88" width="6.5" height="18" rx="3" fill={SKIN_TONE} />
+          <ellipse cx="42" cy="107" rx="7" ry="5" fill={SHOES_WHITE} />
+          <path d="M 36 107 Q 42 104, 48 107" stroke={SHOES_ORANGE} strokeWidth="2" strokeLinecap="round" />
+
+          <rect x="53.5" y="88" width="6.5" height="18" rx="3" fill={SKIN_TONE} />
+          <ellipse cx="58" cy="107" rx="7" ry="5" fill={SHOES_WHITE} />
+          <path d="M 52 107 Q 58 104, 64 107" stroke={SHOES_ORANGE} strokeWidth="2" strokeLinecap="round" />
+
+          {/* Quần sooc nâu nhạt bé trai */}
+          <path
+            d="M 37 74 L 63 74 L 64 89 L 52 89 L 50 82 L 48 89 L 36 89 Z"
+            fill={BROWN_BOTTOM}
+          />
+          <path d="M 50 74 L 50 82" stroke={BROWN_SHADOW} strokeWidth="1.5" />
+          <rect x="36" y="72" width="28" height="3" rx="1.5" fill={BROWN_SHADOW} />
+
+          {/* Body: Áo phông cam */}
+          <path
+            d="M 34 52 L 66 52 L 63 74 L 37 74 Z"
+            fill={SHIRT_ORANGE}
+          />
+          {/* White Round Collar */}
+          <path d="M 44 52 C 44 57, 56 57, 56 52 Z" fill={SHIRT_COLLAR} />
+
+          {/* Red Determination Headband Knot (dải băng rôn bay) */}
+          <path d="M 74 24 Q 84 22, 88 28" stroke="#DC2626" strokeWidth="3" strokeLinecap="round" />
+          <path d="M 74 26 Q 86 28, 90 34" stroke="#DC2626" strokeWidth="3" strokeLinecap="round" />
+
+          {/* Left Arm: Cầm bút stylus / bút chì ma thuật */}
+          <path d="M 34 55 Q 22 62, 24 72" stroke={SHIRT_ORANGE} strokeWidth="7" strokeLinecap="round" />
+          <circle cx="25" cy="73" r="4.5" fill={SKIN_TONE} />
+          {/* Pen */}
+          <rect x="19" y="66" width="4" height="13" rx="1.5" fill="#3B82F6" transform="rotate(30 21 72)" />
+          <polygon points="25,64 27,61 30,66" fill="#FBBF24" />
+
+          {/* Right Arm: Giơ tay số 1 chiến thắng */}
+          <path
+            d="M 66 55 Q 76 46, 82 36"
+            stroke={SHIRT_ORANGE}
+            strokeWidth="7"
+            strokeLinecap="round"
+            className={isHovered ? 'animate-arm-wave origin-bottom-left' : ''}
+          />
+          <circle cx="83" cy="35" r="5" fill={SKIN_TONE} />
+          <path d="M 83 35 L 85 28" stroke={SKIN_TONE} strokeWidth="3" strokeLinecap="round" />
+
+          {/* Head & Hair base */}
+          <circle cx="50" cy="36" r="23" fill={SKIN_TONE} />
+
+          {/* Red Determination Headband on forehead */}
+          <path d="M 28 27 C 35 22, 65 22, 72 27" stroke="#DC2626" strokeWidth="6" strokeLinecap="round" fill="none" />
+          {/* Gold Star on Headband */}
+          <polygon points="50,22 52,26 56,26 53,28 54,32 50,29 46,32 47,28 44,26 48,26" fill="#FDE047" />
+
+          {/* Hair Bangs */}
+          <path
+            d="M 28 32 C 28 16, 72 16, 72 32 C 68 28, 62 27, 56 31 C 50 27, 44 28, 38 31 Z"
+            fill="#2D1E16"
+          />
+
+          {/* Big Sparkling Enthusiastic Eyes */}
+          <ellipse cx="42" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="43.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="40.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          <ellipse cx="58" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="59.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="56.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          {/* Eyebrows determined */}
+          <path d="M 37 30 L 46 32" stroke="#2D1E16" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M 63 30 L 54 32" stroke="#2D1E16" strokeWidth="2.5" strokeLinecap="round" />
+
+          {/* Rosy Cheeks */}
+          <ellipse cx="36" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.65" />
+          <ellipse cx="64" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.65" />
+
+          {/* Cheerful Determined Smile */}
+          <path d="M 45 42 Q 50 49, 55 42" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" fill="#FCA5A5" />
+        </svg>
+      );
+    }
+
+    case 'lan-community': {
+      // Bé gái Lan - Cầm cờ kết nối trái tim cộng đồng, tóc tết bím nơ hoa, áo cam, váy nâu nhạt trên gối
+      return (
+        <svg
+          viewBox="0 0 100 115"
+          fill="none"
+          className={`${className} ${isHovered ? 'animate-bounce' : ''}`}
+        >
+          {/* Shadow */}
+          <ellipse cx="50" cy="110" rx="20" ry="4" fill="#000000" opacity="0.12" />
+
+          {/* Shoes */}
+          <rect x="36" y="103" width="10" height="7" rx="3.5" fill={SHOES_WHITE} stroke="#E2E8F0" strokeWidth="1" />
+          <ellipse cx="41" cy="104" rx="3.5" ry="1.5" fill={SHOES_ORANGE} />
+          <rect x="54" y="103" width="10" height="7" rx="3.5" fill={SHOES_WHITE} stroke="#E2E8F0" strokeWidth="1" />
+          <ellipse cx="59" cy="104" rx="3.5" ry="1.5" fill={SHOES_ORANGE} />
+
+          {/* Legs */}
+          <rect x="38" y="94" width="6" height="10" rx="3" fill={SKIN_TONE} />
+          <rect x="56" y="94" width="6" height="10" rx="3" fill={SKIN_TONE} />
+
+          {/* Skirt: Brownish beige, above knee */}
+          <path d="M 33 80 L 67 80 L 71 96 L 29 96 Z" fill={BROWN_BOTTOM} />
+          <path d="M 33 80 L 67 80 L 68 83 L 32 83 Z" fill={BROWN_SHADOW} />
+
+          {/* Uniform Orange Shirt */}
+          <path d="M 32 55 L 68 55 L 67 81 L 33 81 Z" fill={SHIRT_ORANGE} />
+          {/* White Peter Pan Collar */}
+          <path d="M 40 55 C 44 59, 48 59, 50 56 C 52 59, 56 59, 60 55 Z" fill={SHIRT_COLLAR} />
+
+          {/* Right Arm: Waving hand */}
+          <path d="M 68 58 Q 78 68, 76 76" stroke={SHIRT_ORANGE} strokeWidth="7" strokeLinecap="round" />
+          <circle cx="76" cy="78" r="4" fill={SKIN_TONE} />
+
+          {/* Left Arm: Holding Community Heart Flag */}
+          <path d="M 32 58 Q 22 64, 24 72" stroke={SHIRT_ORANGE} strokeWidth="7" strokeLinecap="round" />
+          <circle cx="24" cy="74" r="4" fill={SKIN_TONE} />
+          {/* Flagpole */}
+          <line x1="24" y1="40" x2="24" y2="88" stroke="#78350F" strokeWidth="2.5" strokeLinecap="round" />
+          {/* Flag with Heart */}
+          <path d="M 24 42 L 6 48 L 24 55 Z" fill="#EF4444" />
+          <circle cx="16" cy="48" r="2" fill="#FFFFFF" />
+
+          {/* Hair behind shoulders */}
+          <path d="M 26 40 C 20 60, 24 70, 32 75" stroke="#3A2012" strokeWidth="6" strokeLinecap="round" fill="none" />
+          <path d="M 74 40 C 80 60, 76 70, 68 75" stroke="#3A2012" strokeWidth="6" strokeLinecap="round" fill="none" />
+
+          {/* Head & Face */}
+          <circle cx="50" cy="36" r="23" fill={SKIN_TONE} />
+
+          {/* Hair Bangs with cute flower clip */}
+          <path
+            d="M 28 32 C 28 16, 72 16, 72 32 C 67 26, 60 26, 52 30 C 44 26, 36 26, 28 32 Z"
+            fill="#3A2012"
+          />
+
+          {/* Flower Hairpin on left hair */}
+          <circle cx="34" cy="22" r="3.5" fill="#F59E0B" />
+          <circle cx="34" cy="22" r="1.5" fill="#FFFFFF" />
+
+          {/* Big Sparkly Friendly Eyes */}
+          <ellipse cx="42" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="43.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="40.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          <ellipse cx="58" cy="37" rx="4.5" ry="6" fill="#2E1C11" />
+          <circle cx="59.5" cy="35" r="2.2" fill="#FFFFFF" />
+          <circle cx="56.5" cy="39" r="1.2" fill="#FFFFFF" />
+
+          {/* Eyebrows */}
+          <path d="M 38 29 Q 42 27, 46 29" stroke="#3A2012" strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M 54 29 Q 58 27, 62 29" stroke="#3A2012" strokeWidth="2" strokeLinecap="round" fill="none" />
+
+          {/* Sweet Rosy Cheeks */}
+          <ellipse cx="36" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.7" />
+          <ellipse cx="64" cy="43" rx="4.5" ry="3" fill={BLUSH} opacity="0.7" />
+
+          {/* Cute Smile */}
+          <path d="M 45 43 Q 50 49, 55 43" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" fill="#FCA5A5" />
         </svg>
       );
     }

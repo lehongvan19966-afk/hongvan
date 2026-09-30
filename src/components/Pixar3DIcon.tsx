@@ -15,6 +15,7 @@ export type PixarIconType =
   | 'sparkle'
   | 'trophy'
   | 'video'
+  | 'daily-practice'
   | 'robot';
 
 interface Pixar3DIconProps {
@@ -409,6 +410,28 @@ export const Pixar3DIcon: React.FC<Pixar3DIconProps> = ({
             <rect x="10" y="16" width="44" height="32" rx="10" fill="#EA580C" />
             <rect x="14" y="20" width="36" height="24" rx="6" fill="#FFFBEB" />
             <polygon points="28,26 38,32 28,38" fill="#EA580C" />
+          </svg>
+        );
+
+      case 'daily-practice':
+        return (
+          <svg viewBox="0 0 64 64" fill="none" className="w-full h-full drop-shadow-[0_6px_10px_rgba(239,68,68,0.25)]">
+            <defs>
+              <linearGradient id="fireGrad" x1="12" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#FDE047" />
+                <stop offset="40%" stopColor="#F97316" />
+                <stop offset="100%" stopColor="#DC2626" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 32 8 C 36 20, 52 28, 52 42 C 52 54, 43 60, 32 60 C 21 60, 12 54, 12 42 C 12 28, 28 20, 32 8 Z"
+              fill="url(#fireGrad)"
+            />
+            <path
+              d="M 32 24 C 35 32, 44 38, 44 46 C 44 52, 38 56, 32 56 C 26 56, 20 52, 20 46 C 20 38, 29 32, 32 24 Z"
+              fill="#FEF08A"
+            />
+            <polygon points="32,32 35,39 42,39 37,44 39,51 32,47 25,51 27,44 22,39 29,39" fill="#EA580C" />
           </svg>
         );
 

@@ -98,13 +98,13 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   ];
 
   const coursesList = [
-    { id: 'course-1', title: 'Level 1: Nhập môn AI Mầm non (ChatGPT & Prompting)' },
-    { id: 'course-2', title: 'Level 2: AI Tạo Tranh Ảnh & Truyện Tranh 3D (Canva AI)' },
-    { id: 'course-3', title: 'Level 3: Soạn Giáo Án 5 Bước Chuẩn Bộ GD&ĐT' },
-    { id: 'course-4', title: 'Level 4: Thiết Kế Trò Chơi Tương Tác & Game AI' },
-    { id: 'course-5', title: 'Level 5: English Buddy – Tích Hợp Song Ngữ Tiếng Anh' },
-    { id: 'course-6', title: 'Level 6: Tự Động Hóa Học Liệu & PowerPoint Giảng Dạy' },
-    { id: 'course-7', title: 'Level 7: Chuyên Gia EdTech & Quản Lý Lớp Học AI' },
+    { id: 'course-1', title: 'Nhập môn AI Mầm non (ChatGPT & Prompting)' },
+    { id: 'course-2', title: 'AI Tạo Tranh Ảnh & Truyện Tranh 3D (Canva AI)' },
+    { id: 'course-3', title: 'Soạn Giáo Án 5 Bước Chuẩn Bộ GD&ĐT' },
+    { id: 'course-4', title: 'Thiết Kế Trò Chơi Tương Tác & Game AI' },
+    { id: 'course-5', title: 'English Buddy – Tích Hợp Song Ngữ Tiếng Anh' },
+    { id: 'course-6', title: 'Tự Động Hóa Học Liệu & PowerPoint Giảng Dạy' },
+    { id: 'course-7', title: 'Quản Lý Lớp Học & Chuyên Môn Sư Phạm AI' },
     { id: 'community-open', title: 'Kho Mở Cộng Đồng (Bài học độc lập)' },
   ];
 
@@ -209,17 +209,6 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isAuthenticated) {
-      openAuthModal('login', 'Cô vui lòng đăng nhập tài khoản để đăng tải video bài học.');
-      return;
-    }
-    if (!isEmailVerified) {
-      setErrorMessage(
-        'Email của cô chưa được xác minh. Theo quy định hệ thống (IX-E), chỉ tài khoản đã xác minh mới được đăng video bài học lên thư viện. Cô vui lòng xác minh email trước nhé!'
-      );
-      setUploadStatus('error');
-      return;
-    }
     if (!title.trim()) {
       alert('Vui lòng nhập tiêu đề video bài học');
       return;
@@ -272,6 +261,8 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       setCreatedVideo(created);
       setUploadStatus('ready');
       sounds.playSuccess();
+      // Instantly notify parent so video is in state even if user closes modal immediately
+      onSuccess(created);
     } catch (err: any) {
       console.error('Upload error:', err);
       sounds.playRetry();
@@ -317,24 +308,18 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
           </button>
         </div>
 
-        {/* Email verification reminder in modal */}
-        {!isEmailVerified && (
-          <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-between text-xs text-amber-900 gap-2">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
-              <span>
-                Cô cần <strong>xác minh địa chỉ email</strong> để đăng video bài học lên hệ thống lưu trữ lâu dài.
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => openAuthModal('verify')}
-              className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-black text-xs shrink-0 cursor-pointer"
-            >
-              Xác minh ngay
-            </button>
+        {/* Không giới hạn số lượng video tải lên */}
+        <div className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-green-50 border border-emerald-200 rounded-2xl flex items-center justify-between text-xs text-emerald-950 gap-2 shadow-2xs">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-emerald-600 shrink-0 animate-pulse" />
+            <span>
+              <strong>Không giới hạn tải video:</strong> Cô có thể đăng tải số lượng video bài học tùy thích để lưu trữ vĩnh viễn và chia sẻ lâu dài cùng đồng nghiệp!
+            </span>
           </div>
-        )}
+          <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-black text-[11px] shrink-0 border border-emerald-300">
+            ♾️ Không giới hạn
+          </span>
+        </div>
 
         {/* Upload Progress Status Banner (XV-D) */}
         {uploadStatus === 'ready' && createdVideo ? (
@@ -368,7 +353,7 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5">
               <button
                 type="button"
                 onClick={() => {
@@ -376,10 +361,29 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
                   onSuccess(createdVideo);
                   onClose();
                 }}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer mx-auto"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Play className="w-5 h-5 fill-current" />
                 <span>▶ XEM VIDEO</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  sounds.playPop();
+                  onSuccess(createdVideo);
+                  setUploadStatus('idle');
+                  setTitle('');
+                  setDescription('');
+                  setVideoFile(null);
+                  setVideoPreviewUrl('');
+                  setVideoBase64('');
+                  setCreatedVideo(null);
+                }}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-orange-50 text-orange-700 border-2 border-orange-300 font-black text-sm shadow-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Upload className="w-4 h-4" />
+                <span>+ Tải tiếp video khác (Không giới hạn)</span>
               </button>
             </div>
           </div>
@@ -515,6 +519,25 @@ export const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Option C: Direct Video Link (YouTube, Drive, MP4) */}
+            <div className="pt-2 border-t border-amber-200/80">
+              <label className="text-[11px] font-bold text-stone-700 flex items-center gap-1.5 mb-1">
+                <Globe className="w-3.5 h-3.5 text-orange-600" />
+                <span>Hoặc dán liên kết video (YouTube, Google Drive, MP4 trực tuyến):</span>
+              </label>
+              <input
+                type="url"
+                value={videoPreviewUrl && !videoFile && !videoBase64 ? videoPreviewUrl : ''}
+                onChange={(e) => {
+                  setVideoPreviewUrl(e.target.value.trim());
+                  setVideoFile(null);
+                  setVideoBase64('');
+                }}
+                placeholder="https://... (Ví dụ link MP4, Google Drive hoặc video chia sẻ)"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-amber-200 text-xs text-stone-900 focus:outline-none focus:border-orange-500 font-mono"
+              />
             </div>
 
             {/* Video Preview Player if chosen */}

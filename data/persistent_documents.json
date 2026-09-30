@@ -1,0 +1,121 @@
+[
+  {
+    "id": "doc_1790756865902_9ckj",
+    "title": "Giáo án thử nghiệm cô Vân",
+    "type": "text",
+    "category": "Giáo án mầm non",
+    "sourceFunction": "academy",
+    "fileUrl": "/uploads/documents/test_doc_doc_1790756865900_eoc1.txt",
+    "fileName": "test_doc.txt",
+    "fileSize": "0.0 MB",
+    "content": "",
+    "previewHtml": "",
+    "author": "Cô Lê Hồng Vân",
+    "uploadedAt": "30/9/2026",
+    "description": "",
+    "tags": []
+  },
+  {
+    "id": "doc_1790756604548_oruo",
+    "title": "Tài liệu thử nghiệm",
+    "type": "text",
+    "category": "Giáo án mầm non",
+    "sourceFunction": "academy",
+    "fileUrl": "/uploads/documents/test_doc_doc_1790756604546_f7m3.txt",
+    "fileName": "test_doc.txt",
+    "fileSize": "0.0 MB",
+    "content": "",
+    "previewHtml": "",
+    "author": "Cô Lê Hồng Vân",
+    "uploadedAt": "30/9/2026",
+    "description": "",
+    "tags": []
+  },
+  {
+    "id": "doc_1790755752486_lid8",
+    "title": "Mã QR Nhóm Zalo Giáo Viên Mầm Non",
+    "type": "image",
+    "category": "Cộng đồng mầm non",
+    "sourceFunction": "community",
+    "fileUrl": "/uploads/documents/1790700416278_1577872629100347954_526244_doc_1790755752476_7kmp.jpg",
+    "fileName": "1790700416278_1577872629100347954_5262449690516765904_33f6c655652b1bb9a083c5092f5f54c8.jpg",
+    "fileSize": "0.2 MB",
+    "content": "",
+    "previewHtml": "",
+    "author": "Cô Lê Hồng Vân",
+    "uploadedAt": "30/9/2026",
+    "description": "",
+    "tags": []
+  },
+  {
+    "id": "doc_1790699516607_fn85",
+    "title": "Tài Liệu Mẫu Kiểm Tra",
+    "type": "docx",
+    "category": "Giáo án mầm non",
+    "sourceFunction": "teaching-pack",
+    "fileUrl": "/uploads/documents/sample_giao_an_5_buoc_doc_1790699516601_0722.docx",
+    "fileName": "sample_giao_an_5_buoc.docx",
+    "fileSize": "0.0 MB",
+    "content": "Tài liệu Word kiểm tra lưu trữ vĩnh viễn",
+    "author": "Cô Lê Hồng Vân",
+    "uploadedAt": "29/9/2026",
+    "description": "Tài liệu Word kiểm tra lưu trữ vĩnh viễn",
+    "tags": []
+  },
+  {
+    "id": "doc_init_1",
+    "title": "Giáo án mẫu 5 bước chuẩn Bộ GD&ĐT tích hợp AI",
+    "type": "docx",
+    "category": "Giáo án mầm non",
+    "sourceFunction": "academy",
+    "fileUrl": "/uploads/documents/sample_giao_an_5_buoc.docx",
+    "fileName": "Giao_an_5_buoc_chuan_Bo_GD.docx",
+    "fileSize": "1.8 MB",
+    "author": "Vườn Ươm AI Mầm Non",
+    "uploadedAt": "2026-09-28",
+    "description": "Kế hoạch bài dạy chi tiết 5 bước: Ổn định, Khám phá, Trải nghiệm, Luyện tập, Đánh giá mở rộng.",
+    "content": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\\nĐộc lập - Tự do - Hạnh phúc\\n\\nKẾ HOẠCH BÀI DẠY (GIÁO ÁN)\\nChủ đề: Khám phá thế giới thực vật quanh bé\\nĐộ tuổi: 4–5 tuổi (Lớp Chồi)\\nThời gian: 25–30 phút\\n\\nI. MỤC ĐÍCH - YÊU CẦU:\\n1. Kiến thức: Trẻ nhận biết tên gọi, màu sắc, đặc điểm của các loài hoa quả quen thuộc.\\n2. Kỹ năng: Rèn kỹ năng quan sát, so sánh, diễn đạt ngôn ngữ mạch lạc.\\n3. Thái độ: Giáo dục trẻ yêu quý thiên nhiên, chăm sóc cây xanh.\\n\\nII. TIẾN HÀNH HOẠT ĐỘNG (5 BƯỚC):\\n- Bước 1: Ổn định & Tạo hứng thú bằng bài hát vui nhộn.\\n- Bước 2: Khám phá vật thật và hình ảnh 3D AI sinh động.\\n- Bước 3: Trải nghiệm tương tác cùng bạn bè.\\n- Bước 4: Luyện tập qua trò chơi củng cố.\\n- Bước 5: Nhận xét, tuyên dương và dặn dò.",
+    "tags": [
+      "Giáo án",
+      "Chuẩn Bộ",
+      "Tài liệu lưu trữ"
+    ]
+  },
+  {
+    "id": "doc_init_2",
+    "title": "Bộ Prompt thần thánh tạo tranh truyện & thơ mầm non",
+    "type": "pdf",
+    "category": "Tài liệu hướng dẫn AI",
+    "sourceFunction": "academy",
+    "fileUrl": "/uploads/documents/bo_prompt_ai_mam_non.pdf",
+    "fileName": "Bo_Prompt_AI_Mam_Non_2026.pdf",
+    "fileSize": "3.2 MB",
+    "author": "Ban Chuyên Môn EdTech",
+    "uploadedAt": "2026-09-28",
+    "description": "Hơn 50 câu lệnh prompt mẫu tạo ảnh hoạt hình Pixar 3D, thơ 4 chữ, bài hát ru mầm non.",
+    "content": "BỘ PROMPT MẪU 1-CHẠM DÀNH CHO GIÁO VIÊN MẦM NON:\\n\\n1. Tạo tranh minh họa truyện 3D Pixar:\\n\"Prompt: An adorable chubby Vietnamese toddler boy in yellow dungarees exploring a sunny garden with friendly butterfly, 3D Pixar style, cinematic soft light, vibrant warm colors, ultra cute, 8k resolution.\"\\n\\n2. Sáng tác thơ mầm non theo chủ đề:\\n\"Prompt: Hãy viết một bài thơ 4 chữ vui tươi, vần điệu dễ nhớ cho bé 3-4 tuổi về chủ đề 'Rửa tay sạch khuẩn trước khi ăn cơm'.\"\\n\\n3. Tạo kịch bản rối bóng:\\n\"Prompt: Soạn kịch bản kịch rối bóng 5 phút về tình bạn giữa Chú Thỏ Trắng và Bác Gấu Nâu.\"",
+    "tags": [
+      "Prompt",
+      "Canva AI",
+      "ChatGPT"
+    ]
+  },
+  {
+    "id": "doc_init_3",
+    "title": "Tuyển tập 30 bài thơ mầm non phát triển ngôn ngữ",
+    "type": "text",
+    "category": "Văn học mầm non",
+    "sourceFunction": "media_vault",
+    "fileUrl": "",
+    "fileName": "Tuyen_tap_30_bai_tho_mam_non.txt",
+    "fileSize": "450 KB",
+    "author": "Cô Lê Hồng Vân",
+    "uploadedAt": "2026-09-29",
+    "description": "Các bài thơ ngắn 4 chữ, 5 chữ giàu vần điệu giúp trẻ phát triển khả năng diễn đạt.",
+    "content": "BÀI THƠ: MẦM CÂY BÉ BỎNG\\n\\nNhú lên từ đất\\nMầm nhỏ màu xanh\\nĐón hạt sương mai\\nLá non rung rinh.\\n\\nCây cần ánh nắng\\nCần giọt mưa rơi\\nBé chăm tưới nước\\nCây lớn tươi cười! 🌸",
+    "tags": [
+      "Thơ mầm non",
+      "Phát triển ngôn ngữ"
+    ]
+  }
+]

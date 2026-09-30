@@ -68,7 +68,7 @@ export const MOCK_BADGES: BadgeDetail[] = [
     id: 'badge-master',
     name: '🏆 AI Teacher',
     icon: '🏆',
-    description: 'Hoàn thành trọn bộ 7 cấp độ tại AI Academy',
+    description: 'Tích cực học tập và thực hành sáng tạo với Hướng dẫn học AI từ cơ bản đến nâng cao',
     earnedDate: '',
     unlocked: false,
   },

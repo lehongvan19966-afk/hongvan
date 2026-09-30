@@ -15,9 +15,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
 
   const suggestions = [
     { title: 'Khám phá quả cam', type: 'Giáo án · 4-5 tuổi', tab: 'lesson-studio', extra: { topic: 'Khám phá quả cam' } },
-    { title: 'Kỹ thuật giữ nhân vật nhất quán', type: 'Khóa học AI · Level 2', tab: 'academy' },
+    { title: 'Kỹ thuật giữ nhân vật nhất quán', type: 'Hướng dẫn học AI', tab: 'academy' },
+    { title: 'Luyện AI mỗi ngày: Viết prompt, tạo ảnh & video', type: 'Thực hành Canva & ChatGPT', tab: 'daily-practice' },
     { title: 'English Buddy cho trẻ 3-4 tuổi', type: 'Song ngữ tự nhiên', tab: 'english-buddy' },
-    { title: 'Teaching Pack Ngày của Mẹ', type: 'Trọn gói hoạt động', tab: 'teaching-pack' },
+    { title: 'Kiến thức AI: Tải & Lưu trữ file Word, PDF', type: 'Tài liệu mầm non lưu mãi', tab: 'teaching-pack' },
     { title: 'Trò chơi phân loại màu sắc', type: 'Interactive Game', tab: 'magic-learning' },
   ];
 

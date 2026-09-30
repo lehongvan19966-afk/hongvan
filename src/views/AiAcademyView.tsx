@@ -4,6 +4,9 @@ import { Pixar3DIcon } from '../components/Pixar3DIcon';
 import { VideoUploadModal } from '../components/VideoUploadModal';
 import { VideoPlayer, VideoPlayerRef } from '../components/VideoPlayer';
 import { ExportShareModal } from '../components/ExportShareModal';
+import { DocumentViewerModal } from '../components/DocumentViewerModal';
+import { DocumentUploadModal } from '../components/DocumentUploadModal';
+import { persistentDocStorage, StoredDocument } from '../services/persistentDocStorage';
 import {
   GraduationCap,
   PlayCircle,
@@ -36,6 +39,9 @@ import {
   Lock,
   Globe,
   Users,
+  Download,
+  Database,
+  X,
 } from 'lucide-react';
 import { Course, CourseLesson, VideoItem, UserProfile } from '../types';
 import { MOCK_COURSES, INITIAL_USER } from '../data/mockData';
@@ -53,8 +59,36 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
   initialVideoId,
   onEarnBadge,
 }) => {
-  // Navigation mode: 'videos' (Video Knowledge Library) or 'courses' (7 Level Curriculum)
-  const [activeTabMode, setActiveTabMode] = useState<'videos' | 'courses'>('videos');
+  // Navigation mode: 'videos' (Video Knowledge Library) or 'documents' (Tài Liệu Lưu Trữ Lâu Dài)
+  const [activeTabMode, setActiveTabMode] = useState<'videos' | 'documents'>('videos');
+
+  // Stored Documents State (Lưu và xem lâu dài bền vững)
+  const [storedDocs, setStoredDocs] = useState<StoredDocument[]>(() =>
+    persistentDocStorage.getAllDocuments()
+  );
+  const [selectedDocToView, setSelectedDocToView] = useState<StoredDocument | null>(null);
+  const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
+  const [isDocUploadModalOpen, setIsDocUploadModalOpen] = useState(false);
+  const [docFilterCategory, setDocFilterCategory] = useState<string>('all');
+  const [docSearchQuery, setDocSearchQuery] = useState<string>('');
+
+  useEffect(() => {
+    const handleDocSaved = () => {
+      setStoredDocs(persistentDocStorage.getAllDocuments());
+    };
+    window.addEventListener('persistent_document_saved', handleDocSaved);
+    return () => window.removeEventListener('persistent_document_saved', handleDocSaved);
+  }, []);
+
+  const handleOpenDocViewer = async (doc: StoredDocument) => {
+    sounds.playPop();
+    setSelectedDocToView(doc);
+    setIsDocViewerOpen(true);
+    const fullDoc = await persistentDocStorage.getDocumentById(doc.id);
+    if (fullDoc) {
+      setSelectedDocToView(fullDoc);
+    }
+  };
 
   // Video Library State
   const [videos, setVideos] = useState<VideoItem[]>([]);
@@ -105,9 +139,20 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
   // Upload Modal State
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
+  // Backup & Restore State
+  const [showBackupModal, setShowBackupModal] = useState(false);
+  const [importCount, setImportCount] = useState<number | null>(null);
+  const backupFileInputRef = useRef<HTMLInputElement | null>(null);
+
   // Load persistent videos on mount
   useEffect(() => {
     loadVideos();
+
+    const handleLibraryUpdate = () => {
+      loadVideos();
+    };
+    window.addEventListener('video_library_updated', handleLibraryUpdate);
+    return () => window.removeEventListener('video_library_updated', handleLibraryUpdate);
   }, []);
 
   const loadVideos = async () => {
@@ -268,9 +313,14 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
   // Handle Video Upload Success (XVI-C: Lưu lâu dài không bị mất)
   const handleUploadSuccess = (newVideo: VideoItem) => {
     sounds.playSuccess();
-    setVideos((prev) => [newVideo, ...prev]);
+    setVideos((prev) => [newVideo, ...prev.filter((v) => v.id !== newVideo.id)]);
     setSelectedVideo(newVideo);
     setActiveTabMode('videos');
+    // Reset all filters so video is immediately visible upon returning
+    setSelectedTopic('all');
+    setSelectedLevel('all');
+    setSelectedScope('all');
+    setSearchQuery('');
   };
 
   // Filtered Video List
@@ -286,7 +336,13 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
 
     let matchesScope = true;
     if (selectedScope === 'mine') {
-      matchesScope = v.authorId === currentUser.id;
+      matchesScope =
+        v.authorId === currentUser.id ||
+        v.authorId === 'user-01' ||
+        v.authorId === 'user-001' ||
+        v.authorName === currentUser.name ||
+        v.authorName === 'Cô Lê Hồng Vân' ||
+        v.id.startsWith('vid_17');
     } else if (selectedScope === 'saved') {
       matchesScope = (v.savesCount || 0) > 0;
     }
@@ -317,30 +373,42 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 text-orange-700 text-xs font-black shadow-2xs border border-orange-200">
               <Film className="w-3.5 h-3.5 text-orange-600" />
-              <span>Hệ Thống Video Tri Thức · Lưu Trữ Lâu Dài Vĩnh Viễn</span>
+              <span>Hướng Dẫn Tự Học AI · Từ Cơ Bản Đến Nâng Cao</span>
             </div>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-amber-950 tracking-tight font-['Quicksand']">
-              Thư Viện Video Học Tập Lâu Dài
+              Hướng Dẫn Học AI Từ Cơ Bản Đến Nâng Cao
             </h1>
             <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-              Mọi video chia sẻ từ giáo viên cả nước được lưu trữ vĩnh viễn trên Cloud.
-              Tự động bóc tách transcript, tóm tắt bài giảng & tích hợp AI Mentor hỏi đáp thông minh.
+              Kho video bài giảng và tài liệu hướng dẫn học AI từ cơ bản đến nâng cao dành riêng cho giáo viên mầm non. Lưu trữ vĩnh viễn trên Cloud, xem và tải về lâu dài bất cứ lúc nào. Tự động bóc tách transcript & tích hợp AI Mentor hỏi đáp thông minh.
             </p>
           </div>
 
-          {/* Prominent Button: 🎥 + Tải video bài học (XVI-B) */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          {/* Prominent Action Buttons: Tải video (Không giới hạn) & Tải tài liệu */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
             <button
               onClick={() => {
                 sounds.playPop();
                 setIsUploadModalOpen(true);
               }}
-              className="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:via-orange-600 hover:to-amber-700 text-white font-black text-xs sm:text-sm shadow-lg shadow-orange-500/30 hover:scale-103 active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer ring-2 ring-orange-400/40"
+              className="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:via-orange-600 hover:to-amber-700 text-white font-black text-xs sm:text-sm shadow-md shadow-orange-500/30 hover:scale-103 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer ring-2 ring-orange-400/40"
+              title="Tải lên không giới hạn số lượng video"
             >
-              <div className="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center">
-                <Film className="w-4 h-4 text-white" />
+              <div className="w-6 h-6 rounded-xl bg-white/20 flex items-center justify-center">
+                <Film className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="font-['Quicksand'] tracking-wide">🎥 + Tải video bài học</span>
+              <span className="font-['Quicksand'] tracking-wide">🎥 Tải video lên (Không giới hạn)</span>
+            </button>
+
+            <button
+              onClick={() => {
+                sounds.playPop();
+                setIsDocUploadModalOpen(true);
+              }}
+              className="px-4 py-3 rounded-2xl bg-white hover:bg-amber-50 text-stone-800 border-2 border-amber-200/90 font-black text-xs sm:text-sm shadow-2xs hover:scale-103 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              title="Tải lên tài liệu lưu trữ lâu dài"
+            >
+              <Upload className="w-4 h-4 text-orange-600" />
+              <span>📚 + Tải tài liệu lên</span>
             </button>
           </div>
         </div>
@@ -352,7 +420,7 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
       </div>
 
       {/* ======================================================== */}
-      {/* DUAL MODE SELECTOR: VIDEO LIBRARY vs 7-LEVEL CURRICULUM */}
+      {/* MODE SELECTOR: VIDEO LIBRARY vs PERSISTENT DOCUMENTS (ĐÃ BỎ LỘ TRÌNH 7 CẤP ĐỘ) */}
       {/* ======================================================== */}
       <div className="flex items-center justify-between border-b border-amber-200/70 pb-3 flex-wrap gap-3">
         <div className="flex items-center gap-2 p-1 bg-amber-50/70 border border-amber-200/80 rounded-2xl">
@@ -374,28 +442,39 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
           <button
             onClick={() => {
               sounds.playPop();
-              setActiveTabMode('courses');
+              setActiveTabMode('documents');
             }}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center gap-2 ${
-              activeTabMode === 'courses'
+              activeTabMode === 'documents'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-2xs'
                 : 'text-stone-700 hover:text-orange-700'
             }`}
           >
-            <GraduationCap className="w-4 h-4" />
-            <span>Lộ Trình 7 Cấp Độ AI</span>
+            <BookOpen className="w-4 h-4" />
+            <span>Tài Liệu Lưu Trữ Lâu Dài ({storedDocs.length})</span>
           </button>
         </div>
 
-        {/* Stats Pill */}
-        <div className="flex items-center gap-3 text-xs text-stone-500 font-bold">
-          <span className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-amber-100 shadow-2xs">
-            <Users className="w-3.5 h-3.5 text-orange-600" />
-            <span>{videos.filter((v) => v.authorId === currentUser.id).length} video của cô</span>
+        {/* Stats Pill & Backup button */}
+        <div className="flex items-center gap-2 text-xs text-stone-500 font-bold flex-wrap">
+          <button
+            onClick={() => {
+              sounds.playPop();
+              setShowBackupModal(true);
+            }}
+            className="flex items-center gap-1.5 bg-white hover:bg-amber-50 text-stone-800 px-3 py-1.5 rounded-full border border-amber-300 shadow-2xs cursor-pointer transition-colors"
+            title="Bảo vệ video không bị mất: Tải file sao lưu hoặc khôi phục"
+          >
+            <Database className="w-3.5 h-3.5 text-orange-600" />
+            <span>💾 Sao lưu & Khôi phục video</span>
+          </button>
+          <span className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-amber-100 shadow-2xs text-emerald-800">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Không giới hạn video</span>
           </span>
-          <span className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-amber-100 shadow-2xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Lưu vĩnh viễn trên Cloud</span>
+          <span className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-full border border-amber-100 shadow-2xs text-blue-800">
+            <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+            <span>IndexedDB Vault vĩnh viễn</span>
           </span>
         </div>
       </div>
@@ -411,11 +490,15 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
               onClick={() => {
                 sounds.playPop();
                 setSelectedVideo(null);
+                setSelectedTopic('all');
+                setSelectedLevel('all');
+                setSelectedScope('all');
+                setSearchQuery('');
               }}
               className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-amber-200 text-xs font-black text-amber-950 flex items-center gap-2 cursor-pointer shadow-2xs"
             >
               <ArrowLeft className="w-4 h-4 text-orange-600" />
-              <span>← Quay lại kho video bài học</span>
+              <span>← Quay lại Thư Viện Video (Tất cả)</span>
             </button>
 
             <div className="flex items-center gap-2 text-xs">
@@ -820,15 +903,22 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                       <div className="flex items-center justify-between">
                         <div>
                           <h4 className="font-black text-xs sm:text-sm text-amber-950 font-['Quicksand']">
-                            📚 TÀI LIỆU BÀI HỌC ĐÍNH KÈM
+                            📚 TÀI LIỆU BÀI HỌC ĐÍNH KÈM (LƯU TRỮ LÂU DÀI)
                           </h4>
                           <p className="text-[11px] text-stone-500 font-medium">
-                            Giáo viên có thể tải hoặc xem tài liệu trực tiếp theo quyền truy cập
+                            Giáo viên có thể xem trực tiếp hoặc tải tài liệu Word, PDF, PowerPoint về máy lâu dài
                           </p>
                         </div>
-                        <span className="text-[10px] px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold">
-                          Đầy đủ giáo án & prompt
-                        </span>
+                        <button
+                          onClick={() => {
+                            sounds.playPop();
+                            setIsDocUploadModalOpen(true);
+                          }}
+                          className="px-3 py-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-black text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer transition-all hover:scale-102"
+                        >
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>+ Tải thêm tài liệu</span>
+                        </button>
                       </div>
 
                       {/* Default Comprehensive Materials Suite */}
@@ -850,12 +940,17 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                           </div>
                           <button
                             onClick={() => {
-                              sounds.playSuccess();
-                              alert(`Đang mở tải tài liệu PDF bài học: "${selectedVideo.title}"`);
+                              sounds.playPop();
+                              const doc = storedDocs.find((d) => d.type === 'pdf') || storedDocs[1] || storedDocs[0];
+                              setSelectedDocToView({
+                                ...doc,
+                                title: `Giáo trình tóm tắt: ${selectedVideo.title}`,
+                              });
+                              setIsDocViewerOpen(true);
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-red-50 text-red-700 font-bold text-xs border border-red-200 cursor-pointer shrink-0"
+                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-red-50 text-red-700 font-bold text-xs border border-red-200 cursor-pointer shrink-0 shadow-2xs"
                           >
-                            Tải về
+                            Xem & Tải
                           </button>
                         </div>
 
@@ -876,12 +971,17 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                           </div>
                           <button
                             onClick={() => {
-                              sounds.playSuccess();
-                              alert(`Đang tải giáo án mẫu Word cho bài: "${selectedVideo.title}"`);
+                              sounds.playPop();
+                              const doc = storedDocs.find((d) => d.type === 'docx') || storedDocs[0];
+                              setSelectedDocToView({
+                                ...doc,
+                                title: `Kế hoạch bài dạy 5 bước: ${selectedVideo.title}`,
+                              });
+                              setIsDocViewerOpen(true);
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs border border-blue-200 cursor-pointer shrink-0"
+                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs border border-blue-200 cursor-pointer shrink-0 shadow-2xs"
                           >
-                            Tải về
+                            Xem & Tải
                           </button>
                         </div>
 
@@ -902,12 +1002,19 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                           </div>
                           <button
                             onClick={() => {
-                              sounds.playSuccess();
-                              alert(`Đang tải slide bài giảng PowerPoint: "${selectedVideo.title}"`);
+                              sounds.playPop();
+                              const doc = storedDocs[0];
+                              setSelectedDocToView({
+                                ...doc,
+                                type: 'pptx',
+                                title: `Slide trình chiếu bài giảng: ${selectedVideo.title}`,
+                                description: 'Slide trình chiếu PowerPoint minh họa các bước thực hành AI mầm non.',
+                              });
+                              setIsDocViewerOpen(true);
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-orange-50 text-orange-700 font-bold text-xs border border-orange-200 cursor-pointer shrink-0"
+                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-orange-50 text-orange-700 font-bold text-xs border border-orange-200 cursor-pointer shrink-0 shadow-2xs"
                           >
-                            Tải về
+                            Xem & Tải
                           </button>
                         </div>
 
@@ -915,25 +1022,38 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                         <div className="p-3.5 rounded-2xl bg-purple-50/60 border border-purple-200 flex items-center justify-between gap-3 shadow-2xs">
                           <div className="flex items-center gap-2.5 overflow-hidden">
                             <div className="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
-                              ZIP
+                              IMG
                             </div>
                             <div className="overflow-hidden">
                               <span className="font-black text-xs text-amber-950 truncate block">
-                                Bộ hình ảnh & tranh minh họa 3D
+                                Bộ tranh truyện 3D minh họa
                               </span>
                               <span className="text-[10px] text-stone-500 block">
-                                Tệp nén (.zip) · 15 hình 4K sắc nét
+                                Hình ảnh 3D Pixar · Sắc nét độ phân giải cao
                               </span>
                             </div>
                           </div>
                           <button
                             onClick={() => {
-                              sounds.playSuccess();
-                              alert(`Đang tải gói hình ảnh tư liệu của bài học!`);
+                              sounds.playPop();
+                              const doc = storedDocs.find((d) => d.type === 'image') || {
+                                id: 'img_sample',
+                                title: `Bộ tranh truyện 3D: ${selectedVideo.title}`,
+                                type: 'image' as const,
+                                category: 'Tranh ảnh 3D',
+                                sourceFunction: 'academy' as const,
+                                fileUrl: selectedVideo.thumbnailUrl,
+                                fileName: 'Tranh_minh_hoa_3D.jpg',
+                                author: selectedVideo.authorName,
+                                uploadedAt: '2026-09-29',
+                                description: 'Hình ảnh 3D Pixar minh họa bài học mầm non chất lượng cao.',
+                              };
+                              setSelectedDocToView(doc);
+                              setIsDocViewerOpen(true);
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-purple-50 text-purple-700 font-bold text-xs border border-purple-200 cursor-pointer shrink-0"
+                            className="px-3 py-1.5 rounded-xl bg-white hover:bg-purple-50 text-purple-700 font-bold text-xs border border-purple-200 cursor-pointer shrink-0 shadow-2xs"
                           >
-                            Tải về
+                            Xem & Tải
                           </button>
                         </div>
                       </div>
@@ -1285,7 +1405,15 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
                       </div>
 
                       {/* Top Badges */}
-                      <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                      <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap max-w-[85%]">
+                        {(vid.id.startsWith('vid_17') ||
+                          vid.authorId === currentUser.id ||
+                          vid.authorId === 'user-001' ||
+                          vid.authorName === 'Cô Lê Hồng Vân') && (
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white font-black text-[10px] backdrop-blur-xs flex items-center gap-1 shadow-sm">
+                            <span>⭐ Video của cô</span>
+                          </span>
+                        )}
                         <span className="px-2 py-0.5 rounded-full bg-stone-900/80 text-white font-black text-[10px] backdrop-blur-xs">
                           {vid.topic}
                         </span>
@@ -1369,102 +1497,165 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
         </div>
       ) : (
         /* ======================================================== */
-        /* MODE 3: 7 LEVELS CURRICULUM SYLLABUS */
+        /* MODE 3: KHO TÀI LIỆU LƯU TRỮ LÂU DÀI BỀN VỮNG */
         /* ======================================================== */
-        <div className="space-y-6">
-          {/* Level Island Bar */}
-          <div className="flex items-center gap-2.5 overflow-x-auto pb-2 no-scrollbar">
-            {courses.map((c) => {
-              const isSelected = c.id === selectedCourseId;
-              return (
+        <div className="space-y-6 animate-fadeIn">
+          {/* Top Search & Filter Bar */}
+          <div className="bg-white/95 rounded-3xl p-4 sm:p-5 border border-amber-200/80 shadow-[0_4px_16px_rgba(180,83,9,0.04)] space-y-3.5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              {/* Search */}
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={docSearchQuery}
+                  onChange={(e) => setDocSearchQuery(e.target.value)}
+                  placeholder="Tìm tài liệu giáo án, thơ truyện, prompt AI, hướng dẫn..."
+                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-amber-50/30 border border-amber-200 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+
+              {/* Upload Document Button */}
+              <button
+                onClick={() => {
+                  sounds.playPop();
+                  setIsDocUploadModalOpen(true);
+                }}
+                className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-600 hover:to-amber-600 text-white font-black font-bubbly text-xs shadow-md shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-102"
+              >
+                <Upload className="w-4 h-4" />
+                <span>+ Tải Lên Tài Liệu Mới</span>
+              </button>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs">
+              {[
+                { id: 'all', label: 'Tất cả tài liệu' },
+                { id: 'Giáo án mầm non', label: '📝 Giáo án mầm non' },
+                { id: 'Tài liệu hướng dẫn AI', label: '🤖 Hướng dẫn AI & Prompt' },
+                { id: 'Văn học & Thơ truyện', label: '📖 Văn học thơ truyện' },
+                { id: 'English Buddy', label: '🌎 Song ngữ tiếng Anh' },
+                { id: 'Trò chơi & Học liệu', label: '🎮 Trò chơi & Học liệu' },
+              ].map((cat) => (
                 <button
-                  key={c.id}
+                  key={cat.id}
                   onClick={() => {
                     sounds.playPop();
-                    setSelectedCourseId(c.id);
-                    if (c.lessons.length > 0) {
-                      setActiveCourseLessonId(c.lessons[0].id);
-                    }
+                    setDocFilterCategory(cat.id);
                   }}
-                  className={`p-3.5 rounded-2xl border text-left shrink-0 w-44 sm:w-52 transition-all cursor-pointer ${
-                    isSelected
-                      ? 'bg-gradient-to-tr from-amber-500 to-orange-600 text-white border-orange-600 shadow-sm scale-102'
-                      : 'bg-white/95 hover:bg-amber-50/60 border-amber-200/80 text-stone-800'
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all cursor-pointer ${
+                    docFilterCategory === cat.id
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-2xs'
+                      : 'bg-amber-50/70 hover:bg-amber-100/70 text-stone-700 border border-amber-200/80'
                   }`}
                 >
-                  <div className="flex items-center justify-between text-xs font-bold mb-1">
-                    <span className={isSelected ? 'text-amber-200' : 'text-orange-700'}>
-                      Cấp độ {c.level}
-                    </span>
-                    <span className="text-[10px] opacity-80">{c.lessonsCount} bài</span>
-                  </div>
-                  <h4 className="font-black text-xs sm:text-sm line-clamp-1 font-['Quicksand']">
-                    {c.title}
-                  </h4>
-                  <div className="mt-2 flex items-center justify-between text-[10px] opacity-90 font-medium">
-                    <span>{c.progressPercent}% hoàn thành</span>
-                    <span>{c.duration}</span>
-                  </div>
+                  {cat.label}
                 </button>
-              );
-            })}
+              ))}
+            </div>
           </div>
 
-          {/* Lessons in Selected Course */}
+          {/* Documents Grid */}
           {(() => {
-            const currentCourse = courses.find((c) => c.id === selectedCourseId) || courses[0];
-            return (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-black text-sm sm:text-base text-amber-950 font-['Quicksand']">
-                    {currentCourse.title}
-                  </h3>
-                  <span className="text-xs text-stone-500">
-                    {currentCourse.lessons.length} bài học thực hành
-                  </span>
-                </div>
+            const filteredDocs = storedDocs.filter((doc) => {
+              const matchesSearch =
+                doc.title.toLowerCase().includes(docSearchQuery.toLowerCase()) ||
+                (doc.description && doc.description.toLowerCase().includes(docSearchQuery.toLowerCase())) ||
+                (doc.tags && doc.tags.some((t) => t.toLowerCase().includes(docSearchQuery.toLowerCase())));
+              const matchesCategory =
+                docFilterCategory === 'all' || doc.category === docFilterCategory;
+              return matchesSearch && matchesCategory;
+            });
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {currentCourse.lessons.map((lsn, idx) => (
+            if (filteredDocs.length === 0) {
+              return (
+                <div className="p-10 rounded-3xl bg-amber-50/50 border border-amber-200 text-center space-y-3">
+                  <span className="text-4xl">📚</span>
+                  <h4 className="font-black text-amber-950 text-sm">
+                    Chưa tìm thấy tài liệu phù hợp
+                  </h4>
+                  <p className="text-xs text-stone-500">
+                    Cô có thể tải lên tài liệu mới để lưu trữ vĩnh viễn và xem lâu dài bất cứ lúc nào!
+                  </p>
+                  <button
+                    onClick={() => setIsDocUploadModalOpen(true)}
+                    className="px-4 py-2 rounded-xl bg-orange-500 text-white font-black text-xs cursor-pointer shadow-sm"
+                  >
+                    + Tải lên tài liệu ngay
+                  </button>
+                </div>
+              );
+            }
+
+            return (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredDocs.map((doc) => {
+                  const typeLabel =
+                    doc.type === 'pdf'
+                      ? 'PDF'
+                      : doc.type === 'docx'
+                      ? 'DOCX'
+                      : doc.type === 'pptx'
+                      ? 'PPTX'
+                      : doc.type === 'image'
+                      ? 'ẢNH'
+                      : doc.type === 'audio'
+                      ? 'AUDIO'
+                      : 'TEXT';
+                  const typeBg =
+                    doc.type === 'pdf'
+                      ? 'bg-red-500'
+                      : doc.type === 'docx'
+                      ? 'bg-blue-600'
+                      : doc.type === 'pptx'
+                      ? 'bg-orange-600'
+                      : doc.type === 'image'
+                      ? 'bg-purple-600'
+                      : 'bg-amber-600';
+
+                  return (
                     <div
-                      key={lsn.id}
-                      onClick={() => {
-                        sounds.playPop();
-                        // Find matching video or create view for lesson
-                        const matched = videos.find(
-                          (v) => v.courseId === currentCourse.id || v.title.includes(lsn.title)
-                        );
-                        if (matched) {
-                          setSelectedVideo(matched);
-                        } else if (videos.length > 0) {
-                          setSelectedVideo(videos[0]);
-                        }
-                      }}
-                      className="p-4 rounded-3xl bg-white border border-amber-200/80 hover:border-orange-400 shadow-2xs hover:shadow-md transition-all cursor-pointer flex items-center justify-between gap-3 group"
+                      key={doc.id}
+                      onClick={() => handleOpenDocViewer(doc)}
+                      className="p-4 rounded-3xl bg-white border border-amber-200/90 hover:border-orange-400 shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between space-y-3 group"
                     >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-black text-orange-700">
-                            Bài {idx + 1}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className={`text-[10px] px-2 py-0.5 rounded-lg text-white font-black ${typeBg} shadow-2xs`}>
+                            {typeLabel}
                           </span>
-                          <span className="text-[10px] text-stone-400 font-mono">
-                            {lsn.duration}
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
+                            ✓ Lưu lâu dài
                           </span>
                         </div>
-                        <h4 className="font-black text-xs sm:text-sm text-amber-950 group-hover:text-orange-600 transition-colors">
-                          {lsn.title}
+
+                        <h4 className="font-black text-xs sm:text-sm text-amber-950 group-hover:text-orange-600 transition-colors line-clamp-2 leading-snug">
+                          {doc.title}
                         </h4>
-                        <p className="text-[11px] text-stone-500 line-clamp-1">
-                          {lsn.summary[0] || 'Xem video & thực hành prompt cùng Mầm AI'}
+
+                        <p className="text-[11px] text-stone-500 line-clamp-2 leading-relaxed">
+                          {doc.description || doc.content || 'Tài liệu lưu trữ trong kho học liệu AI'}
                         </p>
                       </div>
 
-                      <div className="w-10 h-10 rounded-2xl bg-amber-50 group-hover:bg-orange-600 group-hover:text-white text-orange-600 flex items-center justify-center shrink-0 transition-colors">
-                        <PlayCircle className="w-5 h-5" />
+                      <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400">
+                        <span className="truncate max-w-[120px]">{doc.author}</span>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDocViewer(doc);
+                            }}
+                            className="px-2.5 py-1 rounded-xl bg-orange-50 hover:bg-orange-100 text-orange-700 font-bold text-[11px] transition-colors cursor-pointer"
+                          >
+                            Xem chi tiết ➔
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             );
           })()}
@@ -1501,6 +1692,149 @@ export const AiAcademyView: React.FC<AiAcademyViewProps> = ({
             data: selectedVideo,
           }}
         />
+      )}
+
+      {/* DOCUMENT VIEWER MODAL (Xem tài liệu lưu trữ lâu dài) */}
+      <DocumentViewerModal
+        document={selectedDocToView}
+        isOpen={isDocViewerOpen}
+        onClose={() => {
+          setIsDocViewerOpen(false);
+          setSelectedDocToView(null);
+        }}
+      />
+
+      {/* DOCUMENT UPLOAD MODAL (Tải tài liệu mới lưu trữ vĩnh viễn) */}
+      <DocumentUploadModal
+        isOpen={isDocUploadModalOpen}
+        onClose={() => setIsDocUploadModalOpen(false)}
+        sourceFunction="academy"
+        authorName={currentUser.name || 'Cô Lê Hồng Vân'}
+        onSuccess={() => {
+          setStoredDocs(persistentDocStorage.getAllDocuments());
+          sounds.playSuccess();
+        }}
+      />
+
+      {/* BACKUP & RESTORE MODAL (Bảo vệ dữ liệu video không bao giờ bị mất) */}
+      {showBackupModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/60 backdrop-blur-xs animate-fadeIn">
+          <div className="w-full max-w-lg bg-white rounded-3xl p-5 sm:p-6 shadow-2xl border border-amber-200/90 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-amber-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-700">
+                  <Database className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-amber-950 font-['Quicksand']">
+                    Sao Lưu & Khôi Phục Video Bài Học
+                  </h3>
+                  <p className="text-xs text-stone-500">
+                    Bảo đảm video không bao giờ bị mất khi tắt app hay đổi thiết bị
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowBackupModal(false)}
+                className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center cursor-pointer transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Storage explanation banner */}
+            <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs space-y-1.5 text-emerald-950">
+              <div className="flex items-center gap-1.5 font-black text-emerald-800">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>Đã kích hoạt kho lưu trữ vĩnh viễn IndexedDB Vault</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-emerald-900/90">
+                Mỗi video tải lên từ máy tính hoặc điện thoại của cô được lưu trực tiếp vào ổ nhớ bảo mật của trình duyệt. Khi cô mở lại app, video tự động phục hồi và phát bình thường.
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="space-y-3 pt-1">
+              {/* Option 1: Export backup */}
+              <div className="p-3.5 rounded-2xl border border-amber-200 bg-amber-50/40 flex items-center justify-between gap-3">
+                <div>
+                  <h4 className="font-bold text-xs text-amber-950">1. Tải về file sao lưu (.json)</h4>
+                  <p className="text-[11px] text-stone-500">
+                    Lưu danh sách bài học, câu hỏi AI, transcript và tiến độ học về máy.
+                  </p>
+                </div>
+                <button
+                  onClick={async () => {
+                    sounds.playSuccess();
+                    const json = await videoService.exportBackup();
+                    const blob = new Blob([json], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `VuonUomAI_VideoBackup_${new Date().toISOString().slice(0, 10)}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                  className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-xs shadow-xs hover:scale-103 cursor-pointer shrink-0 flex items-center gap-1.5"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Tải file sao lưu</span>
+                </button>
+              </div>
+
+              {/* Option 2: Restore from file */}
+              <div className="p-3.5 rounded-2xl border border-amber-200 bg-amber-50/40 flex items-center justify-between gap-3">
+                <div>
+                  <h4 className="font-bold text-xs text-amber-950">2. Khôi phục từ file sao lưu</h4>
+                  <p className="text-[11px] text-stone-500">
+                    Nhập lại toàn bộ video bài giảng đã sao lưu trước đó.
+                  </p>
+                </div>
+                <button
+                  onClick={() => backupFileInputRef.current?.click()}
+                  className="px-3.5 py-2 rounded-xl bg-white border border-amber-300 text-stone-800 font-black text-xs hover:bg-amber-50 cursor-pointer shrink-0 flex items-center gap-1.5 shadow-2xs"
+                >
+                  <Upload className="w-3.5 h-3.5 text-orange-600" />
+                  <span>Chọn file khôi phục</span>
+                </button>
+                <input
+                  ref={backupFileInputRef}
+                  type="file"
+                  accept=".json,application/json"
+                  className="hidden"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const text = await file.text();
+                    try {
+                      const count = await videoService.importBackup(text);
+                      sounds.playSuccess();
+                      setImportCount(count);
+                      loadVideos();
+                    } catch (err: any) {
+                      alert(err.message || 'Lỗi khôi phục');
+                    }
+                  }}
+                />
+              </div>
+
+              {importCount !== null && (
+                <div className="p-3 bg-emerald-100 text-emerald-900 rounded-xl text-xs font-bold text-center">
+                  ✓ Đã khôi phục thành công {importCount} video bài giảng!
+                </div>
+              )}
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setShowBackupModal(false)}
+                className="px-4 py-2 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold text-xs cursor-pointer transition-colors"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

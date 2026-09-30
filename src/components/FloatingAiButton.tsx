@@ -109,6 +109,16 @@ export const FloatingAiButton: React.FC<FloatingAiButtonProps> = ({ onNavigate }
               <button
                 onClick={() => {
                   setIsOpen(false);
+                  onNavigate('ai-assistant');
+                }}
+                className="px-2.5 py-1 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-[11px] whitespace-nowrap shadow-xs hover:from-orange-600 hover:to-amber-600 transition-all flex items-center gap-1 cursor-pointer font-['Quicksand']"
+              >
+                <span>🤖</span>
+                <span>Trợ lý AI mầm non</span>
+              </button>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
                   onNavigate('lesson-studio');
                 }}
                 className="px-2.5 py-1 rounded-xl bg-white border border-amber-200 text-[11px] font-bold text-orange-800 whitespace-nowrap shadow-2xs hover:bg-orange-50 transition-all flex items-center gap-1 cursor-pointer"

@@ -179,7 +179,7 @@ Bộ học liệu gồm:
 
   if (item.type === 'video') {
     const video = item.data;
-    return `🎥 [VIDEO BÀI HỌC HỌC VIỆN AI]
+    return `🎥 [VIDEO HƯỚNG DẪN HỌC AI TỪ CƠ BẢN ĐẾN NÂNG CAO]
 ▶️ ${video?.title || item.title}
 ⏱️ Thời lượng: ${video?.duration || '12:45'}
 🌱 Cấp độ: ${video?.level || 'Cơ bản'}

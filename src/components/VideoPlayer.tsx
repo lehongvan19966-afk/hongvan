@@ -14,6 +14,7 @@ import {
   Clock,
   Sparkles,
   CheckCircle,
+  Upload,
 } from 'lucide-react';
 import { sounds } from '../utils/audioUtils';
 import { MamAiMascot } from './MamAiMascot';
@@ -58,6 +59,19 @@ export const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
     // Controls visibility
     const [showControls, setShowControls] = useState(true);
     const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const localFileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const handlePickLocalVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file || !videoRef.current) return;
+      sounds.playSuccess();
+      const blobUrl = URL.createObjectURL(file);
+      videoRef.current.src = blobUrl;
+      setHasError(false);
+      setIsLoading(false);
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    };
 
     // Format seconds to mm:ss or hh:mm:ss
     const formatTime = (secs: number) => {
@@ -300,16 +314,32 @@ export const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
                 {errorMessage || '⚠️ Video chưa thể phát. Vui lòng kiểm tra lại.'}
               </h4>
               <p className="text-xs text-stone-400 mt-1">
-                Video có thể đang trong tiến trình mã hóa hoặc kết nối mạng không ổn định.
+                Tệp video trên máy chủ có thể đã được làm mới hoặc mạng gián đoạn. Cô có thể bấm thử lại hoặc chọn tệp video từ máy để phát ngay lập tức.
               </p>
             </div>
-            <button
-              onClick={handleRetry}
-              className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-xs shadow-md flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 transition-all"
-            >
-              <RefreshCw className="w-4 h-4" />
-              <span>Thử lại</span>
-            </button>
+            <div className="flex items-center gap-2.5 flex-wrap justify-center">
+              <button
+                onClick={handleRetry}
+                className="px-4 py-2.5 rounded-2xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold text-xs shadow-md flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 transition-all"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Thử lại</span>
+              </button>
+              <button
+                onClick={() => localFileInputRef.current?.click()}
+                className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-xs shadow-md flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 transition-all"
+              >
+                <Upload className="w-4 h-4" />
+                <span>📂 Chọn file video từ máy để phát ngay</span>
+              </button>
+              <input
+                ref={localFileInputRef}
+                type="file"
+                accept="video/*"
+                onChange={handlePickLocalVideo}
+                className="hidden"
+              />
+            </div>
           </div>
         )}
 

@@ -481,3 +481,45 @@ Về nội dung "${message}":
 - Mầm AI luôn đồng hành giúp cô tiết kiệm thời gian chuẩn bị để dành nhiều nụ cười hơn cho các bé yêu! 💖`;
   }
 }
+
+export interface PreschoolAssistantParams {
+  question: string;
+  ageGroup: string;
+  topicCategory: string;
+  history?: Array<{ role: string; content: string }>;
+}
+
+export async function askPreschoolAssistant(params: PreschoolAssistantParams): Promise<string> {
+  try {
+    const res = await fetch('/api/gemini/preschool-assistant', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) throw new Error('Assistant API error');
+    const data = await res.json();
+    if (data.reply) return data.reply;
+  } catch (error) {
+    console.warn('askPreschoolAssistant fallback notice:', error);
+  }
+
+  return `Chào cô và ba mẹ yêu quý! 🌱 Trợ lý Chuyên gia Mầm AI xin được giải đáp về: "${params.question}" cho lứa tuổi **${params.ageGroup}**:
+
+🎯 **1. Đặc điểm tâm lý lứa tuổi (${params.ageGroup}):**
+Ở giai đoạn này, trẻ có tính tò mò cao và học hỏi thông qua trải nghiệm thực tế, trực quan sinh động. Bé rất cần sự kiên nhẫn, công nhận và vỗ về tích cực từ người lớn.
+
+💡 **2. Giải pháp gợi ý từng bước:**
+- **Bước 1 - Lắng nghe & Đồng cảm:** Hãy nhìn thẳng vào mắt bé và gọi tên bé một cách âu yếm.
+- **Bước 2 - Hướng dẫn nhẹ nhàng:** Chia nhỏ hành động thành 1-2 việc đơn giản để bé dễ dàng làm theo.
+- **Bước 3 - Cùng làm với bé:** Người lớn làm mẫu trước, sau đó khích lệ bé tự thực hiện phần còn lại.
+- **Bước 4 - Tuyên dương ngay lập tức:** Dành tặng bé một cái ôm hoặc câu khen ngợi đầy hào hứng!
+
+💬 **3. Lời nói mẫu:**
+> *"Con yêu ơi, mẹ/cô thấy con đang rất cố gắng nè! Chúng mình cùng nhau làm thử một lần nữa nhé, chắc chắn con sẽ làm được mà!"*
+
+🌟 **4. Hoạt động / Kể chuyện kết nối:**
+- Hãy kể cho bé nghe mẩu chuyện ngắn về bạn Sóc Nhỏ ham học hỏi, sau đó cùng bé chơi trò vỗ tay theo nhịp để rèn luyện sự tập trung và gắn kết tình cảm.
+
+💖 **5. Lời nhắn:**
+Nuôi dạy mầm non là một hành trình kỳ diệu. Mầm AI luôn đồng hành cùng cô và gia đình trong từng bước trưởng thành của bé! ✨`;
+}

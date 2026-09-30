@@ -18,7 +18,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClos
       title: 'Cô Học AI Thật Dễ Dàng',
       subtitle: 'Trợ lý thông minh đồng hành',
       description:
-        'Lộ trình 7 cấp độ từ cơ bản đến nâng cao. Mỗi bài giảng có video thực hành, prompt mẫu 1-chạm và AI Mentor giải đáp dựa trên video.',
+        'Hệ sinh thái video bài giảng và học liệu AI phong phú không giới hạn. Mỗi bài giảng có video thực hành, prompt mẫu 1-chạm và AI Mentor giải đáp thông minh.',
       mood: 'teaching' as const,
     },
     {

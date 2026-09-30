@@ -144,11 +144,11 @@ export const FamilyModeView: React.FC = () => {
               <div className="mt-3 pt-2.5 border-t border-amber-100 flex items-center justify-between text-xs">
                 {act.wordToSpeak && (
                   <button
-                    onClick={() => speakText(act.wordToSpeak, 0.9, act.isVi ? 'vi-VN' : 'en-US')}
+                    onClick={() => speakText(act.wordToSpeak, 1.05, 'vi-VN')}
                     className="text-orange-700 font-bold hover:text-orange-800 flex items-center gap-1.5 cursor-pointer"
                   >
                     <Volume2 className="w-4 h-4 text-orange-600" />
-                    <span>Nghe mẫu phát âm / đọc thơ</span>
+                    <span>Bé nghe đọc bài bằng tiếng Việt</span>
                   </button>
                 )}
                 {isDone && (

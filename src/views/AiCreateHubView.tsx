@@ -17,6 +17,20 @@ export const AiCreateHubView: React.FC<AiCreateHubViewProps> = ({ onSelectTool }
     badge: string;
   }> = [
     {
+      id: 'story-poem-creator',
+      title: 'Tạo Thơ Truyện AI',
+      subtitle: 'Nhập câu lệnh AI tạo thơ ảnh 3D & câu chuyện bằng video có lưu trữ',
+      iconName: 'pack',
+      badge: 'Mới Nhất 3D',
+    },
+    {
+      id: 'be-vui-hoc',
+      title: 'Bé Vui Học (Chữ & Tô Màu)',
+      subtitle: 'Học chữ cái, chữ số kéo thả & AI sinh tranh nét đen trắng cho bé tô màu',
+      iconName: 'magic',
+      badge: 'Chấm Điểm & Lưu',
+    },
+    {
       id: 'lesson-studio',
       title: 'Giáo Án AI',
       subtitle: 'Soạn giáo án mầm non chuẩn 5 bước lấy trẻ làm trung tâm',

@@ -6,18 +6,24 @@ import { OnboardingModal } from './components/OnboardingModal';
 import { SearchModal } from './components/SearchModal';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AuthModal } from './components/AuthModal';
+import { PostLoginFlowModal } from './components/PostLoginFlowModal';
 import { EmailVerificationBanner } from './components/EmailVerificationBanner';
 import { ExportShareModal } from './components/ExportShareModal';
 import { getShare } from './services/shareService';
 
 // Views
 import { HomeView } from './views/HomeView';
+import { AiAssistantView } from './views/AiAssistantView';
 import { LessonStudioView } from './views/LessonStudioView';
 import { EnglishBuddyView } from './views/EnglishBuddyView';
 import { TeachingPackView } from './views/TeachingPackView';
 import { AiAcademyView } from './views/AiAcademyView';
 import { AiCreateHubView } from './views/AiCreateHubView';
 import { MagicLearningView } from './views/MagicLearningView';
+import { VideoStoryVaultView } from './views/VideoStoryVaultView';
+import { StoryPoemCreatorView } from './views/StoryPoemCreatorView';
+import { BeVuiHocView } from './views/BeVuiHocView';
+import { DailyAiPracticeView } from './views/DailyAiPracticeView';
 import { LibraryView } from './views/LibraryView';
 import { CommunityView } from './views/CommunityView';
 import { FamilyModeView } from './views/FamilyModeView';
@@ -42,6 +48,9 @@ function AppContent() {
     closeAuthModal,
     savePlanToUser,
     setUser,
+    showPostLoginModal,
+    closePostLoginModal,
+    setTodayEmotion,
   } = useAuth();
 
   const [currentTab, setCurrentTab] = useState<string>('home');
@@ -271,6 +280,10 @@ function AppContent() {
           />
         )}
 
+        {currentTab === 'ai-assistant' && (
+          <AiAssistantView onNavigateToTab={handleNavigate} />
+        )}
+
         {currentTab === 'english-buddy' && (
           <EnglishBuddyView
             initialTopic={(tabExtra.topic as string) || 'Khám phá quả cam'}
@@ -299,9 +312,22 @@ function AppContent() {
           <AiCreateHubView onSelectTool={(toolId) => handleNavigate(toolId)} />
         )}
 
-        {currentTab === 'magic-learning' || currentTab === 'game-builder' || currentTab === 'quiz-generator' ? (
-          <MagicLearningView onNavigateToPack={() => handleNavigate('teaching-pack')} />
+        {currentTab === 'interactive-games' || currentTab === 'magic-learning' || currentTab === 'game-builder' || currentTab === 'quiz-generator' ? (
+          <MagicLearningView
+            onNavigateToPack={() => handleNavigate('story-poem-creator')}
+            initialOpenQuestions={Boolean(tabExtra?.setupQuestions)}
+          />
         ) : null}
+
+        {(currentTab === 'story-poem-creator' || currentTab === 'video-story-vault' || currentTab === 'story-maker') && (
+          <StoryPoemCreatorView initialMode={(tabExtra.mode as 'poem' | 'video') || 'poem'} />
+        )}
+
+        {(currentTab === 'be-vui-hoc' || currentTab === 'kid-learning' || currentTab === 'coloring-studio') && (
+          <BeVuiHocView onBackToHome={() => handleNavigate('home')} />
+        )}
+
+        {currentTab === 'daily-practice' && <DailyAiPracticeView />}
 
         {currentTab === 'library' && (
           <LibraryView
@@ -343,6 +369,14 @@ function AppContent() {
         onClose={closeAuthModal}
         initialMode={authModalMode}
         message={authModalMessage}
+      />
+
+      {/* Post-Login Welcome & Emotion Check-in Board */}
+      <PostLoginFlowModal
+        isOpen={showPostLoginModal}
+        onClose={closePostLoginModal}
+        userName={user?.name || 'Cô và bé'}
+        onSelectEmotion={(emotion) => setTodayEmotion(emotion)}
       />
 
       {/* Global Modals */}

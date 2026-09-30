@@ -321,4 +321,6 @@ export interface VideoItem {
   userProgress?: VideoProgress;
   aiKnowledge: VideoAIKnowledge;
   comments: VideoComment[];
+  isStoredLocally?: boolean;
+  videoBlob?: Blob;
 }
